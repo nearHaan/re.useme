@@ -31,7 +31,7 @@
 
 @layer components {
 	.btn-sidebar {
-		@apply flex w-full cursor-pointer items-center justify-start gap-xs rounded-lg p-xs text-inactive hover:bg-light-blue hover:text-secondary;
+		@apply flex w-full cursor-pointer items-center justify-start gap-xs rounded-lg p-xs text-inactive hover:text-secondary;
 
 		&:hover p {
 			@apply text-secondary;
@@ -39,7 +39,7 @@
 	}
 
 	.btn-sidebar p {
-		@apply text-inactive;
+		@apply font-medium text-inactive;
 	}
 
 	.btn-sidebar-active {
