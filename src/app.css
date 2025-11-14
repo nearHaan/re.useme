@@ -1,1 +1,52 @@
 @import 'tailwindcss';
+
+:root {
+	--color-primary: #46ccd5;
+}
+
+@theme {
+	--spacing-xs: 0.8rem;
+	--spacing-sm: 1rem;
+
+	--color-primary: #46ccd5;
+	--color-secondary: #4676d5;
+	--color-inactive: #848484;
+
+	--color-light-blue: #46ccd520;
+}
+
+@layer base {
+	h1 {
+		@apply text-3xl font-bold;
+	}
+
+	h2 {
+		@apply text-2xl font-semibold;
+	}
+
+	p {
+		@apply text-justify leading-relaxed text-neutral-700;
+	}
+}
+
+@layer components {
+	.btn-sidebar {
+		@apply flex w-full cursor-pointer items-center justify-start gap-xs rounded-sm p-xs text-inactive hover:bg-light-blue hover:text-secondary;
+
+		&:hover p {
+			@apply text-secondary;
+		}
+	}
+
+	.btn-sidebar p {
+		@apply text-inactive;
+	}
+
+	.btn-sidebar-active {
+		@apply bg-light-blue text-secondary;
+	}
+
+	.btn-sidebar-active p {
+		@apply text-secondary;
+	}
+}
