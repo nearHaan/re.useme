@@ -7,6 +7,7 @@
 	onclick={() => {
 		onClick(title, href);
 	}}
+	{title}
 	class="btn-sidebar {isActive ? 'btn-sidebar-active' : ''}"
 >
 	<Icon fill="currentColor"></Icon>
