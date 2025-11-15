@@ -5,8 +5,9 @@
 }
 
 @theme {
-	--spacing-xs: 0.8rem;
-	--spacing-sm: 1rem;
+	--spacing-xs: 0.5rem;
+	--spacing-sm: 0.8rem;
+	--spacing-md: 1rem;
 
 	--color-primary: #46ccd5;
 	--color-secondary: #4676d5;
@@ -17,6 +18,7 @@
 	--color-sidebar-active-bg: #46ccd520;
 	--color-transparent-black: #00000020;
 
+	--color-background: #ffffff;
 	--color-darkBg: #f9f9f9;
 	--color-darkerBg: #efefef;
 }
@@ -30,14 +32,26 @@
 		@apply text-2xl font-semibold;
 	}
 
+	h3 {
+		@apply text-xl font-semibold;
+	}
+
 	p {
 		@apply text-justify leading-relaxed text-neutral-700;
 	}
 }
 
 @layer components {
+	.btn-primary {
+		@apply rounded bg-secondary px-sm py-xs font-semibold text-white;
+	}
+
+	.btn-secondary {
+		@apply rounded border-2 border-secondary px-sm py-xs font-semibold text-secondary;
+	}
+
 	.btn-sidebar {
-		@apply flex w-full cursor-pointer items-center justify-start gap-xs rounded-lg p-xs text-inactive hover:text-secondary;
+		@apply flex w-full cursor-pointer items-center justify-start gap-xs rounded-lg p-sm text-inactive hover:text-secondary;
 
 		&:hover p {
 			@apply text-secondary;
