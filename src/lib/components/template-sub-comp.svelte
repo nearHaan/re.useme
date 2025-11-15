@@ -28,14 +28,14 @@
 </script>
 
 {#if type === 'text' || type === 'email' || type === 'number'}
-	<div class="mb-sm flex w-full flex-col">
+	<div class="flex w-full flex-col">
 		<p class="text-xs">{title}</p>
 		<input {type} placeholder={example} class="text-md w-full rounded-md bg-darkBg p-xs" />
 	</div>
 {/if}
 
 {#if type === 'text-area'}
-	<div class="col-span-2 mb-sm flex w-full flex-col">
+	<div class="col-span-2 flex w-full flex-col">
 		<p class="text-xs">{title}</p>
 		<textarea placeholder={example} class="text-md min-h-40 w-full rounded-md bg-darkBg p-xs"
 		></textarea>
@@ -43,17 +43,14 @@
 {/if}
 
 {#if type === 'date'}
-	<div class="mb-sm flex gap-x-sm">
-		<div class="flex w-full flex-col">
-			<p class="text-xs">Month</p>
+	<div class="flex flex-col">
+		<p class="text-xs">{title}</p>
+		<div class="flex gap-x-sm">
 			<select placeholder="January" class="text-md w-full rounded-md bg-darkBg p-xs">
 				{#each months as month}
 					<option value={month}>{month}</option>
 				{/each}
 			</select>
-		</div>
-		<div class="flex w-full flex-col">
-			<p class="text-xs">Year</p>
 			<input type="number" placeholder="2025" class="text-md w-full rounded-md bg-darkBg p-xs" />
 		</div>
 	</div>
