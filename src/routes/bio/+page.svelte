@@ -1,7 +1,6 @@
 <script lang="ts">
 	import BioCompCard from '$lib/components/bio-comp-card.svelte';
 	import BioSectionBtn from '$lib/components/bio-section-btn.svelte';
-	import TemplateSubComp from '$lib/components/template-sub-comp.svelte';
 	import type { DetailsTemplateType, LoadedData } from '$lib/types';
 	import { Trash } from 'lucide-svelte';
 
@@ -59,6 +58,24 @@
 		}
 	};
 
+	const fetchedDetails = {
+		'Personal Info': {
+			'First Name': 'Farhaan',
+			'Last Name': 'Nizam',
+			About: 'buhahahahah'
+		},
+		Experience: [
+			{
+				'Job Title': 'Yeyy',
+				Company: '',
+				'Date of Joining': '',
+				Till: '',
+				Description: ''
+			}
+		]
+	};
+
+	let userDetails = $state<Record<string, any>>(fetchedDetails);
 	let activeSectionKey = $state<string>(Object.keys(detailsTemplate.data)[0]);
 
 	function onSectionClick(key: string) {
@@ -79,24 +96,48 @@
 			<h3>{activeSectionKey}</h3>
 			<p class="mb-sm">{detailsTemplate.data[activeSectionKey].meta.desc}</p>
 			{#if detailsTemplate.data[activeSectionKey].meta.type === 'single'}
-				<BioCompCard subComponents={detailsTemplate.data[activeSectionKey].subComponents} />
+				<BioCompCard
+					subComponents={detailsTemplate.data[activeSectionKey].subComponents}
+					bind:bindVariable={userDetails[activeSectionKey]}
+				/>
 				<!-- list type -->
 			{:else}
-				<div class="flex flex-col items-start">
-					<div class="flex">
-						<BioCompCard subComponents={detailsTemplate.data[activeSectionKey].subComponents} />
-						<div class="flex h-full items-center justify-center">
-							<button class="cursor-pointer bg-darkBg px-sm text-text">
-								<Trash />
-							</button>
+				<div class="flex flex-col items-start gap-y-sm overflow-auto">
+					{#each userDetails[activeSectionKey] as item, i}
+						<div class="flex">
+							<BioCompCard
+								subComponents={detailsTemplate.data[activeSectionKey].subComponents}
+								bind:bindVariable={userDetails[activeSectionKey][i]}
+							/>
+							<div class="flex h-full items-center justify-center">
+								<button class="cursor-pointer bg-darkBg px-sm text-text">
+									<Trash />
+								</button>
+							</div>
 						</div>
-					</div>
-					<button class="w-fit py-xs font-semibold text-secondary">Add {activeSectionKey}</button>
+					{/each}
+					<button
+						onclick={() => {
+							// const sample = Object.keys(userDetails[activeSectionKey][0]);
+							// userDetails[activeSectionKey].push(Object.keys(userDetails[activeSectionKey][0]).reduce((acc, key) => {
+							// 	acc[key] = '';
+							// 	return acc;
+							// }, {}));
+						}}
+						class="w-fit py-xs font-semibold text-secondary">Add {activeSectionKey}</button
+					>
 				</div>
 			{/if}
 			<div class="mt-sm flex items-center justify-between">
 				<button class="btn-secondary"> Previous </button>
-				<button class="btn-primary"> Save & Next </button>
+				<button
+					onclick={() => {
+						console.log(userDetails);
+					}}
+					class="btn-primary"
+				>
+					Save & Next
+				</button>
 			</div>
 		</div>
 	{/if}
