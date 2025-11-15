@@ -5,3 +5,9 @@ export type NavMenuItem = {
 	title: string;
 	href: string;
 };
+
+export type TemplateSubComponent = {
+	title: string;
+	type: 'photo' | 'text' | 'number' | 'email' | 'url' | 'text-area' | 'date' | 'skill';
+	example: string;
+};
