@@ -13,6 +13,7 @@
 	--color-inactive: #848484;
 
 	--color-light-blue: #46ccd520;
+	--color-transparent-black: #00000020;
 }
 
 @layer base {
