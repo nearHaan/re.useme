@@ -19,7 +19,7 @@
 		{
 			icon: BookUserIcon,
 			title: 'Biodata',
-			href: '/'
+			href: '/bio'
 		},
 		{
 			icon: FileIcon,
