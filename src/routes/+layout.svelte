@@ -5,9 +5,9 @@
 	import SidebarBtn from '$lib/components/sidebar-btn.svelte';
 	import type { NavMenuItem } from '$lib/types';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
 
 	let { children } = $props();
-	let activeTab = $state('Resumes');
 	let meunOpen = $state(false);
 
 	const menuItems: NavMenuItem[] = [
@@ -24,7 +24,7 @@
 		{
 			icon: FileIcon,
 			title: 'Documents',
-			href: '/'
+			href: '/doc'
 		}
 	];
 
@@ -37,7 +37,6 @@
 	}
 
 	function onTabClick(title: string, href: string) {
-		activeTab = title;
 		goto(href);
 	}
 </script>
@@ -68,7 +67,8 @@
 						title={item.title}
 						href={item.href}
 						onClick={onTabClick}
-						isActive={activeTab === item.title}
+						isActive={page.url.pathname === item.href}
+						isFullWidth={true}
 					/>
 				{/each}
 			</div>
@@ -81,14 +81,15 @@
 		</button>
 	</header>
 	<div class="flex h-full w-screen">
-		<div class="w-60 bg-gray-100 p-sm max-md:hidden">
+		<div class="{page.url.pathname !== '/bio' ? 'w-60' : 'w-fit'} bg-gray-100 p-sm max-md:hidden">
 			{#each menuItems as item}
 				<SidebarBtn
 					Icon={item.icon}
 					title={item.title}
 					href={item.href}
 					onClick={onTabClick}
-					isActive={activeTab === item.title}
+					isActive={page.url.pathname === item.href}
+					isFullWidth={page.url.pathname !== '/bio'}
 				/>
 			{/each}
 		</div>
