@@ -12,8 +12,13 @@
 	--color-secondary: #4676d5;
 	--color-inactive: #848484;
 
-	--color-light-blue: #46ccd520;
+	--color-text3: #555555;
+
+	--color-sidebar-active-bg: #46ccd520;
 	--color-transparent-black: #00000020;
+
+	--color-darkBg: #f9f9f9;
+	--color-darkerBg: #efefef;
 }
 
 @layer base {
@@ -44,10 +49,16 @@
 	}
 
 	.btn-sidebar-active {
-		@apply bg-light-blue text-secondary;
+		@apply bg-sidebar-active-bg text-secondary;
 	}
 
 	.btn-sidebar-active p {
 		@apply text-secondary;
+	}
+}
+
+@layer utilities {
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
 	}
 }

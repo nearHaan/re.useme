@@ -61,7 +61,7 @@
 				closeMenu();
 			}}
 		>
-			<div class="h-full w-60 bg-white p-sm">
+			<div class="h-full w-80 bg-gray-100 p-sm">
 				{#each menuItems as item}
 					<SidebarBtn
 						Icon={item.icon}
@@ -76,12 +76,12 @@
 	{/if}
 	<header class="flex h-15 w-full items-center justify-between bg-primary px-5">
 		<h2 class="text-white">re.useme</h2>
-		<button class="min-md:hidden" onclick={toggleMenu}>
+		<button class="md:hidden" onclick={toggleMenu}>
 			<MenuIcon color="white" />
 		</button>
 	</header>
 	<div class="flex h-full">
-		<div class="w-60 p-sm max-md:hidden">
+		<div class="w-80 bg-gray-100 p-sm max-md:hidden">
 			{#each menuItems as item}
 				<SidebarBtn
 					Icon={item.icon}
@@ -92,7 +92,7 @@
 				/>
 			{/each}
 		</div>
-		<div>
+		<div class="w-full">
 			{@render children()}
 		</div>
 	</div>
