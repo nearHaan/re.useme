@@ -4,6 +4,10 @@
 	--color-primary: #46ccd5;
 }
 
+:root {
+	--color-text: #000000;
+}
+
 @theme {
 	--spacing-xs: 0.5rem;
 	--spacing-sm: 0.8rem;
@@ -13,6 +17,7 @@
 	--color-secondary: #4676d5;
 	--color-inactive: #848484;
 
+	--color-text: #000000;
 	--color-text3: #555555;
 
 	--color-sidebar-active-bg: #46ccd520;

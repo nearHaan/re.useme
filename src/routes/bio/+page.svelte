@@ -1,7 +1,9 @@
 <script lang="ts">
+	import BioCompCard from '$lib/components/bio-comp-card.svelte';
 	import BioSectionBtn from '$lib/components/bio-section-btn.svelte';
 	import TemplateSubComp from '$lib/components/template-sub-comp.svelte';
 	import type { DetailsTemplateType, LoadedData } from '$lib/types';
+	import { Trash } from 'lucide-svelte';
 
 	let detailsTemplate: LoadedData<DetailsTemplateType> = {
 		state: 'success',
@@ -75,12 +77,23 @@
 	{#if detailsTemplate.state === 'success'}
 		<div class="flex h-full w-full flex-col bg-background p-sm">
 			<h3>{activeSectionKey}</h3>
-			<p>{detailsTemplate.data[activeSectionKey].meta.desc}</p>
-			<div class="mt-sm flex grid-cols-2 flex-col gap-sm border-2 border-darkerBg p-sm lg:grid">
-				{#each Object.entries(detailsTemplate.data[activeSectionKey].subComponents) as [title, meta]}
-					<TemplateSubComp {title} type={meta.type} example={meta.example} />
-				{/each}
-			</div>
+			<p class="mb-sm">{detailsTemplate.data[activeSectionKey].meta.desc}</p>
+			{#if detailsTemplate.data[activeSectionKey].meta.type === 'single'}
+				<BioCompCard subComponents={detailsTemplate.data[activeSectionKey].subComponents} />
+				<!-- list type -->
+			{:else}
+				<div class="flex flex-col items-start">
+					<div class="flex">
+						<BioCompCard subComponents={detailsTemplate.data[activeSectionKey].subComponents} />
+						<div class="flex h-full items-center justify-center">
+							<button class="cursor-pointer bg-darkBg px-sm text-text">
+								<Trash />
+							</button>
+						</div>
+					</div>
+					<button class="w-fit py-xs font-semibold text-secondary">Add {activeSectionKey}</button>
+				</div>
+			{/if}
 			<div class="mt-sm flex items-center justify-between">
 				<button class="btn-secondary"> Previous </button>
 				<button class="btn-primary"> Save & Next </button>
