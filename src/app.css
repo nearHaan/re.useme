@@ -81,6 +81,10 @@
 		@apply text-secondary;
 	}
 
+	.nav-item {
+		@apply text-sm font-semibold text-secondary;
+	}
+
 	.input-primary {
 		@apply w-full rounded-md bg-darkBg p-xs text-sm;
 	}

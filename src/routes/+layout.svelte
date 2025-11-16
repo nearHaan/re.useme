@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { BookUserIcon, FileIcon, LayoutDashboardIcon, MenuIcon } from 'lucide-svelte';
+	import { BookUserIcon, FileIcon, LayoutDashboardIcon, LogIn, MenuIcon } from 'lucide-svelte';
 	import SidebarBtn from '$lib/components/sidebar-btn.svelte';
 	import type { NavMenuItem } from '$lib/types';
 	import { goto } from '$app/navigation';
@@ -72,11 +72,22 @@
 						isFullWidth={true}
 					/>
 				{/each}
+				<SidebarBtn
+					Icon={LogIn}
+					title="Login"
+					href="/login"
+					onClick={onTabClick}
+					isActive={false}
+					isFullWidth={true}
+				/>
 			</div>
 		</div>
 	{/if}
 	<header class="z-10 flex h-16 w-full items-center justify-between bg-primary px-5">
 		<h2 class="text-white">re.useme</h2>
+		<div class="max-md:hidden">
+			<a href="/login" class="nav-item">Login</a>
+		</div>
 		<button class="md:hidden" onclick={toggleMenu}>
 			<MenuIcon color="white" />
 		</button>
