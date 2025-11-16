@@ -1,25 +1,92 @@
-<!-- TODO: Fix navbar body layout issue. Currently done on hardcoded padding values -->
+<script lang="ts">
+	import ResumeProjectCard from '$lib/components/resume-project-card.svelte';
+	import TemplatePreview from '$lib/components/template-preview.svelte';
+	import type { LoadedData, TemplateThumbnailType } from '$lib/types';
+
+	const fetchedDetails: TemplateThumbnailType[] = [
+		{
+			title: 'Professional',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Classic',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Professional',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Classic',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Professional',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Classic',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Professional',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Classic',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Professional',
+			thumbnail: '',
+			template: {}
+		},
+		{
+			title: 'Classic',
+			thumbnail: '',
+			template: {}
+		}
+	];
+	let availableTemplates: LoadedData<TemplateThumbnailType[]> = {
+		state: 'success',
+		data: fetchedDetails
+	};
+</script>
+
 <div class="no-scrollbar flex h-full flex-col">
 	<div class="m-0 flex flex-col bg-background p-sm">
 		<h2>Create a new Resume</h2>
 		<p class="text-text3">Templates</p>
-		<div class="no-scrollbar mt-sm flex w-full gap-sm overflow-auto">
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-			<div class="aspect-[calc(1/sqrt(2))] h-50 shadow-md/10">//</div>
-		</div>
+		{#if availableTemplates.state === 'success'}
+			<div class="flex justify-center">
+				<div
+					class="no-scrollbar mt-sm grid w-fit grid-cols-2 gap-md overflow-auto md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8"
+				>
+					{#each availableTemplates.data as template}
+						<TemplatePreview
+							title={template.title}
+							thumbnail={template.thumbnail}
+							onClick={() => {}}
+						/>
+					{/each}
+				</div>
+			</div>
+		{/if}
 	</div>
-	<div class="/bg-darkBg h-full bg-darkerBg p-sm">
+	<!-- <div class="/bg-darkBg h-full bg-darkerBg p-sm">
 		<h2>Saved Resumes</h2>
-		<div class="mt-sm flex flex-wrap gap-sm">//</div>
-	</div>
+		<div class="mt-sm flex flex-wrap gap-sm">
+			{#each availableTemplates.data as template}
+				<ResumeProjectCard />
+			{/each}
+		</div>
+	</div> -->
 </div>
