@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { TemplateSubComponent } from '$lib/types';
-	import { FormInput } from 'lucide-svelte';
 
 	let {
 		title,
@@ -28,6 +27,30 @@
 		'November',
 		'December'
 	];
+
+	let showFileBanner = $state(false);
+	let file: File | null = $state(null);
+	const onFile = (e: Event) => {
+		const input = e.target as HTMLInputElement;
+		file = input.files?.[0] ?? null;
+
+		if (file) {
+			bindVariable[title] = URL.createObjectURL(file);
+		}
+	};
+
+	function onUpload() {
+		if (!file) {
+			return alert('Choose a file first');
+		}
+		if (true) {
+			file = null;
+			showFileBanner = true;
+			setTimeout(() => {
+				showFileBanner = false;
+			}, 2000);
+		}
+	}
 </script>
 
 {#if type === 'text' || type === 'email' || type === 'number'}
@@ -89,10 +112,22 @@
 		</div>
 		<div class="flex h-full w-full flex-col">
 			<p class="mb-sm text-xs">{title}</p>
-			<div class="flex gap-xs">
-				<button class="btn-secondary w-fit text-xs">Choose File</button>
-				<button class="btn-primary w-fit text-xs">Upload</button>
+			<div class="flex gap-xs max-md:flex-col">
+				<input
+					type="file"
+					accept="image/*"
+					onchange={onFile}
+					class="btn-secondary w-full text-xs"
+				/>
+				{#if file}
+					<button onclick={onUpload} class="btn-primary w-fit text-xs">Upload</button>
+				{/if}
 			</div>
+			{#if showFileBanner}
+				<div class="mt-xs w-fit rounded-md bg-green-100 p-xs">
+					<p class="text-xs text-green-500">Photo uploaded successfully</p>
+				</div>
+			{/if}
 			<p class="mt-xs text-xs text-red-500">Photo of size should be less than 100KB</p>
 		</div>
 	</div>
