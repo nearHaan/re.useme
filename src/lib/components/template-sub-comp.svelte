@@ -40,7 +40,7 @@
 				bindVariable[title] = (e.target as HTMLInputElement).value;
 			}}
 			placeholder={example}
-			class="text-md w-full rounded-md bg-darkBg p-xs"
+			class="input-primary"
 		/>
 	</div>
 {/if}
@@ -54,7 +54,7 @@
 			onchange={(e: Event) => {
 				bindVariable[title] = (e.target as HTMLInputElement).value;
 			}}
-			class="text-md min-h-40 w-full rounded-md bg-darkBg p-xs"
+			class="input-primary min-h-40"
 		></textarea>
 	</div>
 {/if}
@@ -69,13 +69,13 @@
 					bindVariable[title] = (e.target as HTMLInputElement).value;
 				}}
 				placeholder="January"
-				class="text-md w-full rounded-md bg-darkBg p-xs"
+				class="input-primary"
 			>
 				{#each months as month}
 					<option value={month}>{month}</option>
 				{/each}
 			</select>
-			<input type="number" placeholder="2025" class="text-md w-full rounded-md bg-darkBg p-xs" />
+			<input type="number" placeholder="2025" class="input-primary" />
 		</div>
 	</div>
 {/if}

@@ -2,16 +2,14 @@
 
 :root {
 	--color-primary: #46ccd5;
-}
-
-:root {
 	--color-text: #000000;
 }
 
 @theme {
 	--spacing-xs: 0.5rem;
 	--spacing-sm: 0.8rem;
-	--spacing-md: 1rem;
+	--spacing-md: 1.2rem;
+	--spacing-lg: 1.8rem;
 
 	--color-primary: #46ccd5;
 	--color-secondary: #4676d5;
@@ -44,6 +42,10 @@
 	p {
 		@apply text-justify leading-relaxed text-neutral-700;
 	}
+
+	a {
+		@apply text-sm text-blue-500;
+	}
 }
 
 @layer components {
@@ -52,6 +54,10 @@
 	}
 
 	.btn-secondary {
+		@apply rounded bg-darkerBg px-sm py-xs font-semibold text-text;
+	}
+
+	.btn-outlined {
 		@apply rounded border-2 border-secondary px-sm py-xs font-semibold text-secondary;
 	}
 
@@ -73,6 +79,10 @@
 
 	.btn-sidebar-active p {
 		@apply text-secondary;
+	}
+
+	.input-primary {
+		@apply w-full rounded-md bg-darkBg p-xs text-sm;
 	}
 }
 

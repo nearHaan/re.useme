@@ -85,7 +85,7 @@
 </script>
 
 <!-- TODO: Fix navbar body layout issue. Currently done on hardcoded padding values -->
-<div class="absolute inset-0 z-0 flex h-screen w-screen bg-darkerBg pt-15 min-md:pl-19">
+<div class="absolute inset-0 z-0 flex h-screen w-screen bg-darkerBg pt-15 md:pl-19">
 	<div class="flex h-full w-100 flex-col gap-sm p-sm max-md:hidden">
 		{#if detailsTemplate.state === 'success'}
 			{#each Object.keys(detailsTemplate.data) as key}
@@ -175,7 +175,7 @@
 				</div>
 			{/if}
 			<div class="mt-sm flex items-center justify-between">
-				<button class="btn-secondary"> Previous </button>
+				<button class="btn-outlined"> Previous </button>
 				<button
 					onclick={() => {
 						console.log($state.snapshot(userDetails));

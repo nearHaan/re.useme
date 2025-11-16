@@ -82,20 +82,24 @@
 		</button>
 	</header>
 	<div class="flex h-full w-screen">
-		<div
-			class="{page.url.pathname !== '/bio' ? 'w-60' : 'w-fit'} z-20 bg-gray-100 p-sm max-md:hidden"
-		>
-			{#each menuItems as item}
-				<SidebarBtn
-					Icon={item.icon}
-					title={item.title}
-					href={item.href}
-					onClick={onTabClick}
-					isActive={page.url.pathname === item.href}
-					isFullWidth={page.url.pathname !== '/bio'}
-				/>
-			{/each}
-		</div>
+		{#if page.url.pathname !== '/login'}
+			<div
+				class="{page.url.pathname !== '/bio'
+					? 'w-60'
+					: 'w-fit'} z-20 bg-gray-100 p-sm max-md:hidden"
+			>
+				{#each menuItems as item}
+					<SidebarBtn
+						Icon={item.icon}
+						title={item.title}
+						href={item.href}
+						onClick={onTabClick}
+						isActive={page.url.pathname === item.href}
+						isFullWidth={page.url.pathname !== '/bio'}
+					/>
+				{/each}
+			</div>
+		{/if}
 		<div class="w-full">
 			{@render children()}
 		</div>
