@@ -71,7 +71,7 @@
 	};
 </script>
 
-<div class="no-scrollbar flex h-full flex-col">
+<div class="no-scrollbar flex h-full flex-col overflow-auto">
 	<div class="m-0 flex flex-col bg-background p-sm">
 		<h2>Create a new Resume</h2>
 		<p class="text-text3">Templates</p>

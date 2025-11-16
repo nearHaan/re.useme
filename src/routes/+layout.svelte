@@ -115,7 +115,7 @@
 	</div>
 {/if}
 <div
-	class="absolute inset-0 z-0 pt-navbar-height {page.url.pathname === '/login'
+	class="absolute inset-0 z-0 overflow-hidden pt-navbar-height {page.url.pathname === '/login'
 		? ''
 		: page.url.pathname === '/bio'
 			? 'md:pl-sidebar-shrink-width'
