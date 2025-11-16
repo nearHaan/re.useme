@@ -64,6 +64,8 @@
 
 	const fetchedDetails = {
 		'Personal Info': {
+			'Your Photo':
+				'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww',
 			'First Name': 'Farhaan',
 			'Last Name': 'Nizam',
 			About: 'buhahahahah'

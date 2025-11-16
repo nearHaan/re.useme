@@ -83,13 +83,16 @@
 {#if type === 'photo'}
 	<div class="col-span-2 flex w-full gap-x-sm">
 		<div class="flex w-full items-center justify-center">
-			<div class="aspect-7/9 h-40 bg-darkBg">
-				<img alt="photo" src="/" />
+			<div class="aspect-7/9 h-40 overflow-hidden border-1 border-darkerBg bg-darkBg">
+				<img alt="photo" src={bindVariable[title]} />
 			</div>
 		</div>
 		<div class="flex h-full w-full flex-col">
 			<p class="mb-sm text-xs">{title}</p>
-			<button class="btn-primary w-min text-xs">Upload</button>
+			<div class="flex gap-xs">
+				<button class="btn-secondary w-fit text-xs">Choose File</button>
+				<button class="btn-primary w-fit text-xs">Upload</button>
+			</div>
 			<p class="mt-xs text-xs text-red-500">Photo of size should be less than 100KB</p>
 		</div>
 	</div>
