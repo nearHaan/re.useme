@@ -125,7 +125,7 @@
 			</div>
 			{#if showFileBanner}
 				<div class="mt-xs w-fit rounded-md bg-green-100 p-xs">
-					<p class="text-xs text-green-500">Photo uploaded successfully</p>
+					<p class="text-left text-xs text-green-500">Photo uploaded successfully</p>
 				</div>
 			{/if}
 			<p class="mt-xs text-xs text-red-500">Photo of size should be less than 100KB</p>
