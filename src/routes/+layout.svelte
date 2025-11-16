@@ -84,7 +84,9 @@
 {/if}
 
 <div class="flex h-screen w-screen flex-col">
-	<header class="z-10 flex h-navbar-height w-full items-center justify-between bg-primary px-5">
+	<header
+		class="absolute top-0 right-0 left-0 z-10 flex h-navbar-height w-full items-center justify-between bg-primary px-5"
+	>
 		<a href="/"><h2 class="text-white">re.useme</h2></a>
 		<div class="max-md:hidden">
 			<a href="/login" class="nav-item">Login</a>
@@ -98,7 +100,7 @@
 			<div
 				class="{page.url.pathname !== '/bio'
 					? 'w-sidebar-width'
-					: 'w-sidebar-shrink-width'} z-20 bg-darkBg p-xs max-md:hidden"
+					: 'w-sidebar-shrink-width'} z-20 mt-navbar-height bg-darkBg p-xs max-md:hidden"
 			>
 				{#each menuItems as item}
 					<SidebarBtn
@@ -116,8 +118,8 @@
 			class="absolute inset-0 h-screen w-screen pt-navbar-height {page.url.pathname === '/login'
 				? ''
 				: page.url.pathname === '/bio'
-					? 'pl-sidebar-shrink-width'
-					: 'pl-sidebar-width'}"
+					? 'md:pl-sidebar-shrink-width'
+					: 'md:pl-sidebar-width'}"
 		>
 			{@render children()}
 		</div>
