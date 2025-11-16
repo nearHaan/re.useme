@@ -58,6 +58,18 @@
 						example: 'Awesome job'
 					}
 				}
+			},
+			Skills: {
+				meta: {
+					type: 'list',
+					desc: 'Your top skills'
+				},
+				subComponents: {
+					Name: {
+						type: 'text',
+						example: 'Singing'
+					}
+				}
 			}
 		}
 	};
@@ -168,7 +180,14 @@
 					<button
 						onclick={() => {
 							const sample = Object.keys(detailsTemplate.data[activeSectionKey].subComponents);
-							userDetails[activeSectionKey].push(
+							console.log(sample);
+							if (
+								userDetails[activeSectionKey] === undefined ||
+								userDetails[activeSectionKey] === null
+							) {
+								userDetails[activeSectionKey] = new Array<Record<string, string>>();
+							}
+							(userDetails[activeSectionKey] as Array<Record<string, string>>).push(
 								sample.reduce((acc: Record<string, string>, key: string) => {
 									acc[key] = '';
 									return acc;
