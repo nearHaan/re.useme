@@ -1,5 +1,5 @@
 <!-- TODO: Fix hardcoded padding -->
-<div class="absolute inset-0 z-0 flex h-screen w-screen pt-15">
+<div class="flex h-full">
 	<div class="w-full bg-darkerBg max-md:hidden"></div>
 	<div class="flex w-full items-center justify-center">
 		<div class="flex w-80 flex-col">

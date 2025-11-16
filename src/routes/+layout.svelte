@@ -46,45 +46,46 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="flex h-screen w-screen flex-col">
-	{#if meunOpen}
-		<div
-			class="absolute inset-0 z-40 flex justify-end bg-transparent-black"
-			tabindex="0"
-			onkeydown={(e) => {
-				if (e.key === 'Escape') {
-					closeMenu();
-				}
-			}}
-			role="button"
-			onclick={() => {
+{#if meunOpen}
+	<div
+		class="absolute inset-0 z-40 flex justify-end bg-transparent-black"
+		tabindex="0"
+		onkeydown={(e) => {
+			if (e.key === 'Escape') {
 				closeMenu();
-			}}
-		>
-			<div class="z-30 h-full w-60 bg-gray-100 p-sm">
-				{#each menuItems as item}
-					<SidebarBtn
-						Icon={item.icon}
-						title={item.title}
-						href={item.href}
-						onClick={onTabClick}
-						isActive={page.url.pathname === item.href}
-						isFullWidth={true}
-					/>
-				{/each}
+			}
+		}}
+		role="button"
+		onclick={() => {
+			closeMenu();
+		}}
+	>
+		<div class="z-30 h-full w-60 bg-gray-100 p-sm">
+			{#each menuItems as item}
 				<SidebarBtn
-					Icon={LogIn}
-					title="Login"
-					href="/login"
+					Icon={item.icon}
+					title={item.title}
+					href={item.href}
 					onClick={onTabClick}
-					isActive={false}
+					isActive={page.url.pathname === item.href}
 					isFullWidth={true}
 				/>
-			</div>
+			{/each}
+			<SidebarBtn
+				Icon={LogIn}
+				title="Login"
+				href="/login"
+				onClick={onTabClick}
+				isActive={false}
+				isFullWidth={true}
+			/>
 		</div>
-	{/if}
-	<header class="z-10 flex h-16 w-full items-center justify-between bg-primary px-5">
-		<h2 class="text-white">re.useme</h2>
+	</div>
+{/if}
+
+<div class="flex h-screen w-screen flex-col">
+	<header class="z-10 flex h-navbar-height w-full items-center justify-between bg-primary px-5">
+		<a href="/"><h2 class="text-white">re.useme</h2></a>
 		<div class="max-md:hidden">
 			<a href="/login" class="nav-item">Login</a>
 		</div>
@@ -96,8 +97,8 @@
 		{#if page.url.pathname !== '/login'}
 			<div
 				class="{page.url.pathname !== '/bio'
-					? 'w-60'
-					: 'w-fit'} z-20 bg-gray-100 p-sm max-md:hidden"
+					? 'w-sidebar-width'
+					: 'w-sidebar-shrink-width'} z-20 bg-darkBg p-xs max-md:hidden"
 			>
 				{#each menuItems as item}
 					<SidebarBtn
@@ -111,7 +112,13 @@
 				{/each}
 			</div>
 		{/if}
-		<div class="w-full">
+		<div
+			class="absolute inset-0 h-screen w-screen pt-navbar-height {page.url.pathname === '/login'
+				? ''
+				: page.url.pathname === '/bio'
+					? 'pl-sidebar-shrink-width'
+					: 'pl-sidebar-width'}"
+		>
 			{@render children()}
 		</div>
 	</div>
