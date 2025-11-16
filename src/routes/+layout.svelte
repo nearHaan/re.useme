@@ -97,7 +97,7 @@
 {#if page.url.pathname !== '/login'}
 	<div class="absolute top-0 bottom-0 left-0 z-10 pt-navbar-height">
 		<div
-			class=" {page.url.pathname !== '/bio'
+			class="h-full {page.url.pathname !== '/bio'
 				? 'w-sidebar-width'
 				: 'w-sidebar-shrink-width'} bg-darkBg p-xs max-md:hidden"
 		>
