@@ -1,5 +1,5 @@
 <!-- TODO: Fix navbar body layout issue. Currently done on hardcoded padding values -->
-<div class="no-scrollbar absolute inset-0 flex h-full w-screen flex-col pt-19 pl-50">
+<div class="no-scrollbar absolute inset-0 flex h-full w-screen flex-col pt-19 md:pl-50">
 	<div class="m-0 flex flex-col p-sm">
 		<h2>Create a new Resume</h2>
 		<p class="text-text3">Templates</p>

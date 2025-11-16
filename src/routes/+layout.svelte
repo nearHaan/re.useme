@@ -37,6 +37,7 @@
 	}
 
 	function onTabClick(title: string, href: string) {
+		console.log('hi');
 		goto(href);
 	}
 </script>
@@ -48,7 +49,7 @@
 <div class="flex h-screen w-screen flex-col">
 	{#if meunOpen}
 		<div
-			class="absolute inset-0 z-30 bg-transparent-black"
+			class="absolute inset-0 z-40 flex justify-end bg-transparent-black"
 			tabindex="0"
 			onkeydown={(e) => {
 				if (e.key === 'Escape') {
@@ -60,7 +61,7 @@
 				closeMenu();
 			}}
 		>
-			<div class="h-full w-60 bg-gray-100 p-sm">
+			<div class="z-30 h-full w-60 bg-gray-100 p-sm">
 				{#each menuItems as item}
 					<SidebarBtn
 						Icon={item.icon}
@@ -74,7 +75,7 @@
 			</div>
 		</div>
 	{/if}
-	<header class="z-30 flex h-16 w-full items-center justify-between bg-primary px-5">
+	<header class="z-10 flex h-16 w-full items-center justify-between bg-primary px-5">
 		<h2 class="text-white">re.useme</h2>
 		<button class="md:hidden" onclick={toggleMenu}>
 			<MenuIcon color="white" />
@@ -82,7 +83,7 @@
 	</header>
 	<div class="flex h-full w-screen">
 		<div
-			class="{page.url.pathname !== '/bio' ? 'w-60' : 'w-fit'} z-30 bg-gray-100 p-sm max-md:hidden"
+			class="{page.url.pathname !== '/bio' ? 'w-60' : 'w-fit'} z-20 bg-gray-100 p-sm max-md:hidden"
 		>
 			{#each menuItems as item}
 				<SidebarBtn

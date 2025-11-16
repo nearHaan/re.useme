@@ -2,7 +2,7 @@
 	import BioCompCard from '$lib/components/bio-comp-card.svelte';
 	import BioSectionBtn from '$lib/components/bio-section-btn.svelte';
 	import type { DetailsTemplateType, LoadedData } from '$lib/types';
-	import { Trash } from 'lucide-svelte';
+	import { ChevronDown, Trash } from 'lucide-svelte';
 
 	let detailsTemplate: LoadedData<DetailsTemplateType> = {
 		state: 'success',
@@ -78,23 +78,59 @@
 	let userDetails = $state<Record<string, any>>(fetchedDetails);
 	let activeSectionKey = $state<string>(Object.keys(detailsTemplate.data)[0]);
 
+	let showSections = $state(false);
 	function onSectionClick(key: string) {
 		activeSectionKey = key;
 	}
 </script>
 
 <!-- TODO: Fix navbar body layout issue. Currently done on hardcoded padding values -->
-<div class="absolute inset-0 z-0 flex h-screen w-screen bg-darkerBg pt-15 pl-19">
-	<div class="flex h-full w-100 flex-col gap-sm p-sm">
+<div class="absolute inset-0 z-0 flex h-screen w-screen bg-darkerBg pt-15 min-md:pl-19">
+	<div class="flex h-full w-100 flex-col gap-sm p-sm max-md:hidden">
 		{#if detailsTemplate.state === 'success'}
 			{#each Object.keys(detailsTemplate.data) as key}
 				<BioSectionBtn title={key} onClick={onSectionClick} isActive={false} />
 			{/each}
 		{/if}
 	</div>
+	{#if showSections}
+		<div
+			role="button"
+			tabindex="0"
+			onclick={() => {
+				showSections = false;
+			}}
+			onkeydown={(e) => {
+				if (e.key === 'Escape') {
+					showSections = false;
+				}
+			}}
+			class="absolute inset-0 z-20 flex justify-center bg-transparent-black pt-16"
+		>
+			<div class="z-30 mx-sm mt-sm h-min w-full rounded-md bg-white p-sm">
+				{#if detailsTemplate.state === 'success'}
+					{#each Object.keys(detailsTemplate.data) as key}
+						<BioSectionBtn title={key} onClick={onSectionClick} isActive={false} />
+					{/each}
+				{/if}
+			</div>
+		</div>
+	{/if}
 	{#if detailsTemplate.state === 'success'}
 		<div class="flex h-full w-full flex-col bg-background p-sm">
-			<h3>{activeSectionKey}</h3>
+			<h3 class="max-md:hidden">{activeSectionKey}</h3>
+			<div
+				onclick={() => {
+					showSections = true;
+				}}
+				onkeydown={(e) => {}}
+				tabindex="0"
+				role="button"
+				class="mb-sm flex w-full items-center justify-between rounded-md bg-darkBg p-sm text-text md:hidden"
+			>
+				<h3 class="">{activeSectionKey}</h3>
+				<ChevronDown />
+			</div>
 			<p class="mb-sm">{detailsTemplate.data[activeSectionKey].meta.desc}</p>
 			{#if detailsTemplate.data[activeSectionKey].meta.type === 'single'}
 				<BioCompCard
@@ -105,17 +141,19 @@
 			{:else}
 				<div class="flex w-full flex-col items-start gap-y-sm overflow-auto">
 					{#each userDetails[activeSectionKey] as item, i}
-						<div class="flex w-full">
+						<div class="flex w-full max-md:flex-col">
 							<BioCompCard
 								subComponents={detailsTemplate.data[activeSectionKey].subComponents}
 								bind:bindVariable={userDetails[activeSectionKey][i]}
 							/>
-							<div class="flex h-full items-center justify-center">
+							<div
+								class="flex h-full items-start justify-center bg-darkerBg p-xs max-md:w-full max-md:justify-end"
+							>
 								<button
 									onclick={() => {
 										(userDetails[activeSectionKey] as Array<Object>).splice(i, 1);
 									}}
-									class="cursor-pointer bg-darkBg px-sm text-text"
+									class="flex cursor-pointer items-center justify-center rounded-md bg-red-200 p-xs text-text"
 								>
 									<Trash />
 								</button>
