@@ -84,7 +84,7 @@
 {/if}
 
 <header
-	class="absolute top-0 right-0 left-0 z-20 flex h-navbar-height w-full items-center justify-between bg-primary px-xs"
+	class="absolute top-0 right-0 left-0 z-20 flex h-navbar-height w-full items-center justify-between bg-primary px-sm"
 >
 	<a href="/"><h2 class="text-white">re.useme</h2></a>
 	<div class="max-md:hidden">

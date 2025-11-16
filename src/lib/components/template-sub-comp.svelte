@@ -106,7 +106,8 @@
 {#if type === 'photo'}
 	<div class="col-span-2 flex w-full gap-x-sm">
 		<div class="flex w-full items-center justify-center">
-			<div class="aspect-7/9 h-40 overflow-hidden border-1 border-darkerBg bg-darkBg">
+			<div class="aspect-7/9 h-40 overflow-hidden border border-darkerBg bg-darkBg">
+				<!-- svelte-ignore a11y_img_redundant_alt -->
 				<img alt="photo" src={bindVariable[title]} />
 			</div>
 		</div>
