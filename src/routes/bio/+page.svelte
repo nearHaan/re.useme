@@ -13,6 +13,10 @@
 					type: 'single' // list || single
 				},
 				subComponents: {
+					'Your Photo': {
+						type: 'photo',
+						example: ''
+					},
 					'First Name': {
 						type: 'text',
 						example: 'Farhaan'
