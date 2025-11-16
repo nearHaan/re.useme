@@ -102,9 +102,9 @@
 				/>
 				<!-- list type -->
 			{:else}
-				<div class="flex flex-col items-start gap-y-sm overflow-auto">
+				<div class="flex w-full flex-col items-start gap-y-sm overflow-auto">
 					{#each userDetails[activeSectionKey] as item, i}
-						<div class="flex">
+						<div class="flex w-full">
 							<BioCompCard
 								subComponents={detailsTemplate.data[activeSectionKey].subComponents}
 								bind:bindVariable={userDetails[activeSectionKey][i]}
@@ -118,11 +118,13 @@
 					{/each}
 					<button
 						onclick={() => {
-							// const sample = Object.keys(userDetails[activeSectionKey][0]);
-							// userDetails[activeSectionKey].push(Object.keys(userDetails[activeSectionKey][0]).reduce((acc, key) => {
-							// 	acc[key] = '';
-							// 	return acc;
-							// }, {}));
+							const sample = Object.keys(detailsTemplate.data[activeSectionKey].subComponents);
+							userDetails[activeSectionKey].push(
+								sample.reduce((acc: Record<string, string>, key: string) => {
+									acc[key] = '';
+									return acc;
+								}, {})
+							);
 						}}
 						class="w-fit py-xs font-semibold text-secondary">Add {activeSectionKey}</button
 					>
