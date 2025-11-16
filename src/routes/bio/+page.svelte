@@ -84,7 +84,6 @@
 	}
 </script>
 
-<!-- TODO: Fix navbar body layout issue. Currently done on hardcoded padding values -->
 <div class="flex h-full bg-darkerBg">
 	<div class="flex h-full w-100 flex-col gap-sm p-sm max-md:hidden">
 		{#if detailsTemplate.state === 'success'}
