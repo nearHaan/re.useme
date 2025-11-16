@@ -83,7 +83,8 @@
 	}
 </script>
 
-<div class="flex h-full w-full bg-darkerBg">
+<!-- TODO: Fix navbar body layout issue. Currently done on hardcoded padding values -->
+<div class="absolute inset-0 z-0 flex h-screen w-screen bg-darkerBg pt-15 pl-19">
 	<div class="flex h-full w-100 flex-col gap-sm p-sm">
 		{#if detailsTemplate.state === 'success'}
 			{#each Object.keys(detailsTemplate.data) as key}

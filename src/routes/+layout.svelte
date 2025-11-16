@@ -48,7 +48,7 @@
 <div class="flex h-screen w-screen flex-col">
 	{#if meunOpen}
 		<div
-			class="absolute inset-0 bg-transparent-black"
+			class="absolute inset-0 z-30 bg-transparent-black"
 			tabindex="0"
 			onkeydown={(e) => {
 				if (e.key === 'Escape') {
@@ -74,14 +74,16 @@
 			</div>
 		</div>
 	{/if}
-	<header class="flex h-16 w-full items-center justify-between bg-primary px-5">
+	<header class="z-30 flex h-16 w-full items-center justify-between bg-primary px-5">
 		<h2 class="text-white">re.useme</h2>
 		<button class="md:hidden" onclick={toggleMenu}>
 			<MenuIcon color="white" />
 		</button>
 	</header>
 	<div class="flex h-full w-screen">
-		<div class="{page.url.pathname !== '/bio' ? 'w-60' : 'w-fit'} bg-gray-100 p-sm max-md:hidden">
+		<div
+			class="{page.url.pathname !== '/bio' ? 'w-60' : 'w-fit'} z-30 bg-gray-100 p-sm max-md:hidden"
+		>
 			{#each menuItems as item}
 				<SidebarBtn
 					Icon={item.icon}
