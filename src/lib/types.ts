@@ -40,6 +40,7 @@ type DetailsTemplateItem = {
 export type DetailsTemplateType = { [key: string]: DetailsTemplateItem };
 
 export type TemplateThumbnailType = {
+	id: string;
 	title: string;
 	thumbnail: string; //img url
 	template: object;

@@ -5,51 +5,61 @@
 
 	const fetchedDetails: TemplateThumbnailType[] = [
 		{
+			id: '123',
 			title: 'Professional',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '456',
 			title: 'Classic',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '123',
 			title: 'Professional',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '456',
 			title: 'Classic',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '123',
 			title: 'Professional',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '456',
 			title: 'Classic',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '123',
 			title: 'Professional',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '456',
 			title: 'Classic',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '123',
 			title: 'Professional',
 			thumbnail: '',
 			template: {}
 		},
 		{
+			id: '456',
 			title: 'Classic',
 			thumbnail: '',
 			template: {}
@@ -72,6 +82,7 @@
 				>
 					{#each availableTemplates.data as template}
 						<TemplatePreview
+							id={template.id}
 							title={template.title}
 							thumbnail={template.thumbnail}
 							onClick={() => {}}
