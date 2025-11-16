@@ -110,7 +110,12 @@
 								bind:bindVariable={userDetails[activeSectionKey][i]}
 							/>
 							<div class="flex h-full items-center justify-center">
-								<button class="cursor-pointer bg-darkBg px-sm text-text">
+								<button
+									onclick={() => {
+										(userDetails[activeSectionKey] as Array<Object>).splice(i, 1);
+									}}
+									class="cursor-pointer bg-darkBg px-sm text-text"
+								>
 									<Trash />
 								</button>
 							</div>
@@ -134,7 +139,7 @@
 				<button class="btn-secondary"> Previous </button>
 				<button
 					onclick={() => {
-						console.log(userDetails);
+						console.log($state.snapshot(userDetails));
 					}}
 					class="btn-primary"
 				>
