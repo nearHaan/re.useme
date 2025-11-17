@@ -150,10 +150,12 @@
 			</div>
 			<p class="mb-sm">{detailsTemplate.data[activeSectionKey].meta.desc}</p>
 			{#if detailsTemplate.data[activeSectionKey].meta.type === 'single'}
-				<BioCompCard
-					subComponents={detailsTemplate.data[activeSectionKey].subComponents}
-					bind:bindVariable={userDetails[activeSectionKey]}
-				/>
+				<div class="overflow-auto">
+					<BioCompCard
+						subComponents={detailsTemplate.data[activeSectionKey].subComponents}
+						bind:bindVariable={userDetails[activeSectionKey]}
+					/>
+				</div>
 				<!-- list type -->
 			{:else}
 				<div class="flex w-full flex-col items-start gap-y-sm overflow-auto">

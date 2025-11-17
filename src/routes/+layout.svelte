@@ -94,7 +94,7 @@
 		<MenuIcon color="white" />
 	</button>
 </header>
-{#if page.url.pathname !== '/login'}
+{#if page.url.pathname !== '/login' && !page.url.pathname.startsWith('/create')}
 	<div class="absolute top-0 bottom-0 left-0 z-10 pt-navbar-height">
 		<div
 			class="h-full {page.url.pathname !== '/bio'
@@ -115,7 +115,8 @@
 	</div>
 {/if}
 <div
-	class="absolute inset-0 z-0 overflow-hidden pt-navbar-height {page.url.pathname === '/login'
+	class="absolute inset-0 z-0 overflow-hidden pt-navbar-height {page.url.pathname === '/login' ||
+	page.url.pathname.startsWith('/create')
 		? ''
 		: page.url.pathname === '/bio'
 			? 'md:pl-sidebar-shrink-width'

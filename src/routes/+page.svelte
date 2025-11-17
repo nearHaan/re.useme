@@ -85,7 +85,6 @@
 							id={template.id}
 							title={template.title}
 							thumbnail={template.thumbnail}
-							onClick={() => {}}
 						/>
 					{/each}
 				</div>

@@ -1,10 +1,7 @@
 <script lang="ts">
-	const {
-		id,
-		title,
-		thumbnail,
-		onClick
-	}: { id: string; title: string; thumbnail: string; onClick: Function } = $props();
+	import { goto } from '$app/navigation';
+
+	const { id, title, thumbnail }: { id: string; title: string; thumbnail: string } = $props();
 </script>
 
 <div
@@ -12,7 +9,7 @@
 	tabindex="0"
 	onkeydown={(e) => {}}
 	onclick={() => {
-		onClick(id);
+		goto(`/create/${id}`);
 	}}
 	class="flex cursor-pointer flex-col gap-y-xs"
 >
