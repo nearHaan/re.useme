@@ -7,7 +7,9 @@
 	onclick={() => {
 		isChecked = !isChecked;
 	}}
-	class="flex h-5 w-5 items-center justify-center rounded-full border border-text bg-green-400 p-xxxs text-text"
+	class="flex h-5 w-5 items-center justify-center rounded-full border border-text {isChecked
+		? 'bg-green-400'
+		: 'bg-background'} p-xxxs text-text"
 >
 	{#if isChecked}
 		<LucideCheck />

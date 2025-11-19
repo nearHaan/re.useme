@@ -29,7 +29,7 @@ type LoadingFailure = {
 	message: string;
 };
 
-type DetailsTemplateItem = {
+export type DetailsTemplateItem = {
 	meta: {
 		desc: string;
 		type: 'single' | 'list';
