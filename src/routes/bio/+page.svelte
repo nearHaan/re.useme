@@ -4,97 +4,107 @@
 	import type { DetailsTemplateType, LoadedData } from '$lib/types';
 	import { ChevronDown, Trash } from 'lucide-svelte';
 
-	let detailsTemplate: LoadedData<DetailsTemplateType> = {
+	type BioDataType = {
+		template: DetailsTemplateType;
+		userDetails: Record<string, any>;
+	};
+
+	let detailsTemplate: LoadedData<BioDataType> = $state({
 		state: 'success',
 		data: {
-			'Personal Info': {
-				meta: {
-					desc: 'Enter your personal info',
-					type: 'single' // list || single
+			template: {
+				'Personal Info': {
+					meta: {
+						desc: 'Enter your personal info',
+						type: 'single' // list || single
+					},
+					subComponents: {
+						'Your Photo': {
+							type: 'photo',
+							example: ''
+						},
+						'First Name': {
+							type: 'text',
+							example: 'Farhaan'
+						},
+						'Last Name': {
+							type: 'text',
+							example: 'Nizam'
+						},
+						About: {
+							type: 'text-area',
+							example: 'I am awesome'
+						}
+					}
 				},
-				subComponents: {
-					'Your Photo': {
-						type: 'photo',
-						example: ''
+				Experience: {
+					meta: {
+						desc: 'Description',
+						type: 'list' // list || single
 					},
-					'First Name': {
-						type: 'text',
-						example: 'Farhaan'
+					subComponents: {
+						'Job Title': {
+							type: 'text',
+							example: 'CEO'
+						},
+						Company: {
+							type: 'text',
+							example: 'Meta'
+						},
+						'Date of Joining': {
+							type: 'date',
+							example: 'January 2025'
+						},
+						Till: {
+							type: 'date',
+							example: 'January 2025'
+						},
+						Description: {
+							type: 'text-area',
+							example: 'Awesome job'
+						}
+					}
+				},
+				Skills: {
+					meta: {
+						type: 'list',
+						desc: 'Your top skills'
 					},
-					'Last Name': {
-						type: 'text',
-						example: 'Nizam'
-					},
-					About: {
-						type: 'text-area',
-						example: 'I am awesome'
+					subComponents: {
+						Name: {
+							type: 'text',
+							example: 'Singing'
+						}
 					}
 				}
 			},
-			Experience: {
-				meta: {
-					desc: 'Description',
-					type: 'list' // list || single
+			userDetails: {
+				'Personal Info': {
+					'Your Photo':
+						'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww',
+					'First Name': 'Farhaan',
+					'Last Name': 'Nizam',
+					About: 'buhahahahah'
 				},
-				subComponents: {
-					'Job Title': {
-						type: 'text',
-						example: 'CEO'
-					},
-					Company: {
-						type: 'text',
-						example: 'Meta'
-					},
-					'Date of Joining': {
-						type: 'date',
-						example: 'January 2025'
-					},
-					Till: {
-						type: 'date',
-						example: 'January 2025'
-					},
-					Description: {
-						type: 'text-area',
-						example: 'Awesome job'
+				Experience: [
+					{
+						'Job Title': 'Yeyy',
+						Company: '',
+						'Date of Joining': '',
+						Till: '',
+						Description: ''
 					}
-				}
-			},
-			Skills: {
-				meta: {
-					type: 'list',
-					desc: 'Your top skills'
-				},
-				subComponents: {
-					Name: {
-						type: 'text',
-						example: 'Singing'
-					}
-				}
+				]
 			}
 		}
-	};
+	});
+	let activeSectionKey = $state<string>('');
 
-	const fetchedDetails = {
-		'Personal Info': {
-			'Your Photo':
-				'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww',
-			'First Name': 'Farhaan',
-			'Last Name': 'Nizam',
-			About: 'buhahahahah'
-		},
-		Experience: [
-			{
-				'Job Title': 'Yeyy',
-				Company: '',
-				'Date of Joining': '',
-				Till: '',
-				Description: ''
-			}
-		]
-	};
-
-	let userDetails = $state<Record<string, any>>(fetchedDetails);
-	let activeSectionKey = $state<string>(Object.keys(detailsTemplate.data)[0]);
+	$effect(() => {
+		if (detailsTemplate.state === 'success') {
+			activeSectionKey = Object.keys(detailsTemplate.data.template)[0];
+		}
+	});
 
 	let showSections = $state(false);
 	function onSectionClick(key: string) {
@@ -105,7 +115,7 @@
 <div class="flex h-full bg-darkerBg">
 	<div class="flex h-full w-100 flex-col gap-sm p-sm max-md:hidden">
 		{#if detailsTemplate.state === 'success'}
-			{#each Object.keys(detailsTemplate.data) as key}
+			{#each Object.keys(detailsTemplate.data.template) as key}
 				<BioSectionBtn title={key} onClick={onSectionClick} isActive={false} />
 			{/each}
 		{/if}
@@ -126,14 +136,14 @@
 		>
 			<div class="z-30 mx-sm mt-sm h-min w-full rounded-md bg-white p-sm">
 				{#if detailsTemplate.state === 'success'}
-					{#each Object.keys(detailsTemplate.data) as key}
+					{#each Object.keys(detailsTemplate.data.template) as key}
 						<BioSectionBtn title={key} onClick={onSectionClick} isActive={false} />
 					{/each}
 				{/if}
 			</div>
 		</div>
 	{/if}
-	{#if detailsTemplate.state === 'success'}
+	{#if detailsTemplate.state === 'success' && activeSectionKey}
 		<div class="flex h-full w-full flex-col bg-background p-sm">
 			<h3 class="max-md:hidden">{activeSectionKey}</h3>
 			<div
@@ -148,29 +158,32 @@
 				<h3 class="">{activeSectionKey}</h3>
 				<ChevronDown />
 			</div>
-			<p class="mb-sm">{detailsTemplate.data[activeSectionKey].meta.desc}</p>
-			{#if detailsTemplate.data[activeSectionKey].meta.type === 'single'}
+			<p class="mb-sm">{detailsTemplate.data.template[activeSectionKey].meta.desc}</p>
+			{#if detailsTemplate.data.template[activeSectionKey].meta.type === 'single'}
 				<div class="overflow-auto">
 					<BioCompCard
-						subComponents={detailsTemplate.data[activeSectionKey].subComponents}
-						bind:bindVariable={userDetails[activeSectionKey]}
+						subComponents={detailsTemplate.data.template[activeSectionKey].subComponents}
+						bind:bindVariable={detailsTemplate.data.userDetails[activeSectionKey]}
 					/>
 				</div>
 				<!-- list type -->
 			{:else}
 				<div class="flex w-full flex-col items-start gap-y-sm overflow-auto">
-					{#each userDetails[activeSectionKey] as item, i}
+					{#each detailsTemplate.data.userDetails[activeSectionKey] as item, i}
 						<div class="flex w-full max-md:flex-col">
 							<BioCompCard
-								subComponents={detailsTemplate.data[activeSectionKey].subComponents}
-								bind:bindVariable={userDetails[activeSectionKey][i]}
+								subComponents={detailsTemplate.data.template[activeSectionKey].subComponents}
+								bind:bindVariable={detailsTemplate.data.userDetails[activeSectionKey][i]}
 							/>
 							<div
 								class="flex h-full items-start justify-center bg-darkerBg p-xs max-md:w-full max-md:justify-end"
 							>
 								<button
 									onclick={() => {
-										(userDetails[activeSectionKey] as Array<Object>).splice(i, 1);
+										(detailsTemplate.data.userDetails[activeSectionKey] as Array<Object>).splice(
+											i,
+											1
+										);
 									}}
 									class="flex cursor-pointer items-center justify-center rounded-md bg-red-200 p-xs text-text"
 								>
@@ -181,15 +194,21 @@
 					{/each}
 					<button
 						onclick={() => {
-							const sample = Object.keys(detailsTemplate.data[activeSectionKey].subComponents);
+							const sample = Object.keys(
+								detailsTemplate.data.template[activeSectionKey].subComponents
+							);
 							console.log(sample);
 							if (
-								userDetails[activeSectionKey] === undefined ||
-								userDetails[activeSectionKey] === null
+								detailsTemplate.data.userDetails[activeSectionKey] === undefined ||
+								detailsTemplate.data.userDetails[activeSectionKey] === null
 							) {
-								userDetails[activeSectionKey] = new Array<Record<string, string>>();
+								detailsTemplate.data.userDetails[activeSectionKey] = new Array<
+									Record<string, string>
+								>();
 							}
-							(userDetails[activeSectionKey] as Array<Record<string, string>>).push(
+							(
+								detailsTemplate.data.userDetails[activeSectionKey] as Array<Record<string, string>>
+							).push(
 								sample.reduce((acc: Record<string, string>, key: string) => {
 									acc[key] = '';
 									return acc;
@@ -204,7 +223,7 @@
 				<button class="btn-outlined"> Previous </button>
 				<button
 					onclick={() => {
-						console.log($state.snapshot(userDetails));
+						console.log($state.snapshot(detailsTemplate.data.userDetails));
 					}}
 					class="btn-primary"
 				>
