@@ -132,7 +132,7 @@
 					showSections = false;
 				}
 			}}
-			class="absolute inset-0 z-20 flex justify-center bg-transparent-black pt-16"
+			class="absolute inset-0 z-20 flex justify-center bg-transparent-black pt-navbar-height"
 		>
 			<div class="z-30 mx-sm mt-sm h-min w-full rounded-md bg-white p-sm">
 				{#if detailsTemplate.state === 'success'}
