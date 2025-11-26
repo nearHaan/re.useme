@@ -13,88 +13,61 @@
 		state: 'success',
 		data: {
 			template: {
-				'Personal Info': {
+				'692740f422209091d5df45be': {
+					title: 'Personal Info',
 					meta: {
-						desc: 'Enter your personal info',
-						type: 'single' // list || single
+						desc: 'Enter your personal details',
+						type: 'single'
 					},
 					subComponents: {
-						'Your Photo': {
+						'6927513e731ac7ff646b3ce0': {
+							title: 'Your photo',
 							type: 'photo',
 							example: ''
 						},
-						'First Name': {
+						'692750c0731ac7ff646b3cd5': {
+							title: 'First Name',
 							type: 'text',
 							example: 'Farhaan'
 						},
-						'Last Name': {
+						'692750ce731ac7ff646b3cd8': {
+							title: 'Last Name',
 							type: 'text',
-							example: 'Nizam'
+							example: 'Farhaan'
 						},
-						About: {
+						'69275125731ac7ff646b3cdd': {
+							title: 'About',
 							type: 'text-area',
 							example: 'I am awesome'
 						}
 					}
 				},
-				Experience: {
+				'6927415d22209091d5df45c3': {
+					title: 'Experience',
 					meta: {
-						desc: 'Description',
-						type: 'list' // list || single
+						desc: 'Enter your internships, career experiences',
+						type: 'list'
 					},
-					subComponents: {
-						'Job Title': {
-							type: 'text',
-							example: 'CEO'
-						},
-						Company: {
-							type: 'text',
-							example: 'Meta'
-						},
-						'Date of Joining': {
-							type: 'date',
-							example: 'January 2025'
-						},
-						Till: {
-							type: 'date',
-							example: 'January 2025'
-						},
-						Description: {
-							type: 'text-area',
-							example: 'Awesome job'
-						}
-					}
+					subComponents: {}
 				},
-				Skills: {
+				'6927417d22209091d5df45c5': {
+					title: 'Skills',
 					meta: {
-						type: 'list',
-						desc: 'Your top skills'
+						desc: 'Your top strengths',
+						type: 'list'
 					},
-					subComponents: {
-						Name: {
-							type: 'text',
-							example: 'Singing'
-						}
-					}
+					subComponents: {}
 				}
 			},
 			userDetails: {
-				'Personal Info': {
-					'Your Photo':
+				'692740f422209091d5df45be': {
+					'6927513e731ac7ff646b3ce0':
 						'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww',
-					'First Name': 'Farhaan',
-					'Last Name': 'Nizam',
-					About: 'buhahahahah'
+					'692750c0731ac7ff646b3cd5': 'Farhaan',
+					'692750ce731ac7ff646b3cd8': 'Nizam',
+					'69275125731ac7ff646b3cdd': 'buhahahahah'
 				},
-				Experience: [
-					{
-						'Job Title': 'Yeyy',
-						Company: '',
-						'Date of Joining': '',
-						Till: '',
-						Description: ''
-					}
-				]
+				'6927415d22209091d5df45c3': []
 			}
 		}
 	});
@@ -115,8 +88,8 @@
 <div class="flex h-full bg-darkerBg">
 	<div class="flex h-full w-100 flex-col gap-sm p-sm max-md:hidden">
 		{#if detailsTemplate.state === 'success'}
-			{#each Object.keys(detailsTemplate.data.template) as key}
-				<BioSectionBtn title={key} onClick={onSectionClick} isActive={false} />
+			{#each Object.entries(detailsTemplate.data.template) as [key, value]}
+				<BioSectionBtn title={value.title} onClick={onSectionClick} isActive={false} />
 			{/each}
 		{/if}
 	</div>
@@ -136,8 +109,8 @@
 		>
 			<div class="z-30 mx-sm mt-sm h-min w-full rounded-md bg-white p-sm">
 				{#if detailsTemplate.state === 'success'}
-					{#each Object.keys(detailsTemplate.data.template) as key}
-						<BioSectionBtn title={key} onClick={onSectionClick} isActive={false} />
+					{#each Object.entries(detailsTemplate.data.template) as [key, value]}
+						<BioSectionBtn title={value.title} onClick={onSectionClick} isActive={false} />
 					{/each}
 				{/if}
 			</div>
@@ -145,7 +118,7 @@
 	{/if}
 	{#if detailsTemplate.state === 'success' && activeSectionKey}
 		<div class="flex h-full w-full flex-col bg-background p-sm">
-			<h3 class="max-md:hidden">{activeSectionKey}</h3>
+			<h3 class="max-md:hidden">{detailsTemplate.data.template[activeSectionKey].title}</h3>
 			<div
 				onclick={() => {
 					showSections = true;
@@ -155,7 +128,7 @@
 				role="button"
 				class="mb-sm flex w-full items-center justify-between rounded-md bg-darkBg p-sm text-text md:hidden"
 			>
-				<h3 class="">{activeSectionKey}</h3>
+				<h3 class="">{detailsTemplate.data.template[activeSectionKey].title}</h3>
 				<ChevronDown />
 			</div>
 			<p class="mb-sm">{detailsTemplate.data.template[activeSectionKey].meta.desc}</p>

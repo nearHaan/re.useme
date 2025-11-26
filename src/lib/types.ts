@@ -30,11 +30,12 @@ type LoadingFailure = {
 };
 
 export type DetailsTemplateItem = {
+	title: string;
 	meta: {
 		desc: string;
 		type: 'single' | 'list';
 	};
-	subComponents: { [key: string]: { type: string; example: string } };
+	subComponents: { [key: string]: { title: string; type: string; example: string } };
 };
 
 export type DetailsTemplateType = { [key: string]: DetailsTemplateItem };
