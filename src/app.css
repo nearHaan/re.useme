@@ -94,6 +94,10 @@
 	.input-primary {
 		@apply w-full rounded-md bg-darkBg p-xs text-sm;
 	}
+
+	.p-error {
+		@apply rounded text-sm text-red-400;
+	}
 }
 
 @layer utilities {
