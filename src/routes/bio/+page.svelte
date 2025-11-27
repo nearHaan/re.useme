@@ -1,77 +1,31 @@
 <script lang="ts">
+	import { getBioData } from '$lib/api/dataform';
 	import BioCompCard from '$lib/components/bio-comp-card.svelte';
 	import BioSectionBtn from '$lib/components/bio-section-btn.svelte';
-	import type { DetailsTemplateType, LoadedData } from '$lib/types';
+	import type { BioDataType, LoadedData } from '$lib/types';
 	import { ChevronDown, Trash } from 'lucide-svelte';
-
-	type BioDataType = {
-		template: DetailsTemplateType;
-		userDetails: Record<string, any>;
-	};
+	import { onMount } from 'svelte';
 
 	let detailsTemplate: LoadedData<BioDataType> = $state({
-		state: 'success',
-		data: {
-			template: {
-				'692740f422209091d5df45be': {
-					title: 'Personal Info',
-					meta: {
-						desc: 'Enter your personal details',
-						type: 'single'
-					},
-					subComponents: {
-						'6927513e731ac7ff646b3ce0': {
-							title: 'Your photo',
-							type: 'photo',
-							example: ''
-						},
-						'692750c0731ac7ff646b3cd5': {
-							title: 'First Name',
-							type: 'text',
-							example: 'Farhaan'
-						},
-						'692750ce731ac7ff646b3cd8': {
-							title: 'Last Name',
-							type: 'text',
-							example: 'Farhaan'
-						},
-						'69275125731ac7ff646b3cdd': {
-							title: 'About',
-							type: 'text-area',
-							example: 'I am awesome'
-						}
-					}
-				},
-				'6927415d22209091d5df45c3': {
-					title: 'Experience',
-					meta: {
-						desc: 'Enter your internships, career experiences',
-						type: 'list'
-					},
-					subComponents: {}
-				},
-				'6927417d22209091d5df45c5': {
-					title: 'Skills',
-					meta: {
-						desc: 'Your top strengths',
-						type: 'list'
-					},
-					subComponents: {}
-				}
-			},
-			userDetails: {
-				'692740f422209091d5df45be': {
-					'6927513e731ac7ff646b3ce0':
-						'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww',
-					'692750c0731ac7ff646b3cd5': 'Farhaan',
-					'692750ce731ac7ff646b3cd8': 'Nizam',
-					'69275125731ac7ff646b3cdd': 'buhahahahah'
-				},
-				'6927415d22209091d5df45c3': []
-			}
-		}
+		state: 'pending',
+		message: 'Loading template'
 	});
 	let activeSectionKey = $state<string>('');
+
+	onMount(async () => {
+		try {
+			detailsTemplate = {
+				state: 'success',
+				data: await getBioData()
+			};
+		} catch (err: any) {
+			console.error(err);
+			detailsTemplate = {
+				state: 'failed',
+				message: 'Error fetching template'
+			};
+		}
+	});
 
 	$effect(() => {
 		if (detailsTemplate.state === 'success') {
@@ -80,8 +34,40 @@
 	});
 
 	let showSections = $state(false);
+
 	function onSectionClick(key: string) {
 		activeSectionKey = key;
+	}
+
+	function onDeleteClick(index: number) {
+		if (detailsTemplate.state === 'success') {
+			(detailsTemplate.data.userDetails[activeSectionKey] as Array<Object>).splice(index, 1);
+		}
+	}
+
+	function onAddElem() {
+		if (detailsTemplate.state === 'success') {
+			const sample = Object.keys(detailsTemplate.data.template[activeSectionKey].subComponents);
+			console.log(sample);
+			if (
+				detailsTemplate.data.userDetails[activeSectionKey] === undefined ||
+				detailsTemplate.data.userDetails[activeSectionKey] === null
+			) {
+				detailsTemplate.data.userDetails[activeSectionKey] = new Array<Record<string, string>>();
+			}
+			(detailsTemplate.data.userDetails[activeSectionKey] as Array<Record<string, string>>).push(
+				sample.reduce((acc: Record<string, string>, key: string) => {
+					acc[key] = '';
+					return acc;
+				}, {})
+			);
+		}
+	}
+
+	function onSave() {
+		if (detailsTemplate.state === 'success') {
+			console.log($state.snapshot(detailsTemplate.data.userDetails));
+		}
 	}
 </script>
 
@@ -89,7 +75,13 @@
 	<div class="flex h-full w-100 flex-col gap-sm p-sm max-md:hidden">
 		{#if detailsTemplate.state === 'success'}
 			{#each Object.entries(detailsTemplate.data.template) as [key, value]}
-				<BioSectionBtn title={value.title} onClick={onSectionClick} isActive={false} />
+				<BioSectionBtn
+					title={value.title}
+					onClick={() => {
+						onSectionClick(key);
+					}}
+					isActive={false}
+				/>
 			{/each}
 		{/if}
 	</div>
@@ -110,7 +102,13 @@
 			<div class="z-30 mx-sm mt-sm h-min w-full rounded-md bg-white p-sm">
 				{#if detailsTemplate.state === 'success'}
 					{#each Object.entries(detailsTemplate.data.template) as [key, value]}
-						<BioSectionBtn title={value.title} onClick={onSectionClick} isActive={false} />
+						<BioSectionBtn
+							title={value.title}
+							onClick={() => {
+								onSectionClick(key);
+							}}
+							isActive={false}
+						/>
 					{/each}
 				{/if}
 			</div>
@@ -153,10 +151,7 @@
 							>
 								<button
 									onclick={() => {
-										(detailsTemplate.data.userDetails[activeSectionKey] as Array<Object>).splice(
-											i,
-											1
-										);
+										onDeleteClick(i);
 									}}
 									class="flex cursor-pointer items-center justify-center rounded-md bg-red-200 p-xs text-text"
 								>
@@ -165,44 +160,19 @@
 							</div>
 						</div>
 					{/each}
-					<button
-						onclick={() => {
-							const sample = Object.keys(
-								detailsTemplate.data.template[activeSectionKey].subComponents
-							);
-							console.log(sample);
-							if (
-								detailsTemplate.data.userDetails[activeSectionKey] === undefined ||
-								detailsTemplate.data.userDetails[activeSectionKey] === null
-							) {
-								detailsTemplate.data.userDetails[activeSectionKey] = new Array<
-									Record<string, string>
-								>();
-							}
-							(
-								detailsTemplate.data.userDetails[activeSectionKey] as Array<Record<string, string>>
-							).push(
-								sample.reduce((acc: Record<string, string>, key: string) => {
-									acc[key] = '';
-									return acc;
-								}, {})
-							);
-						}}
-						class="w-fit py-xs font-semibold text-secondary">Add {activeSectionKey}</button
+					<button onclick={onAddElem} class="w-fit py-xs font-semibold text-secondary"
+						>Add {detailsTemplate.data.template[activeSectionKey].title}</button
 					>
 				</div>
 			{/if}
 			<div class="mt-sm flex items-center justify-between">
 				<button class="btn-outlined"> Previous </button>
-				<button
-					onclick={() => {
-						console.log($state.snapshot(detailsTemplate.data.userDetails));
-					}}
-					class="btn-primary"
-				>
-					Save & Next
-				</button>
+				<button onclick={onSave} class="btn-primary"> Save & Next </button>
 			</div>
 		</div>
+	{:else if detailsTemplate.state === 'pending'}
+		<p>Loading Template</p>
+	{:else}
+		<p>Something went wrong</p>
 	{/if}
 </div>

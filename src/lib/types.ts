@@ -46,3 +46,8 @@ export type TemplateThumbnailType = {
 	thumbnail: string; //img url
 	template: object;
 };
+
+export type BioDataType = {
+	template: DetailsTemplateType;
+	userDetails: Record<string, any>;
+};
