@@ -41,8 +41,8 @@
 		bindVariable[parentId][index][childId] = value;
 	};
 
-	onMount(() => {
-		console.log('hi');
+	$effect(() => {
+		// fallback funciton is called if the userDetails does not contain parentId key
 		if (bindVariable[parentId] === null || bindVariable[parentId] === undefined) {
 			fallbackFunc(parentId);
 		}

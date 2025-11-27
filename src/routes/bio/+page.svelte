@@ -41,7 +41,10 @@
 
 	function onDeleteClick(index: number) {
 		if (detailsTemplate.state === 'success') {
-			(detailsTemplate.data.userDetails[activeSectionKey] as Array<Object>).splice(index, 1);
+			(detailsTemplate.data.userDetails[activeSectionKey] as Array<Record<string, string>>).splice(
+				index,
+				1
+			);
 		}
 	}
 
