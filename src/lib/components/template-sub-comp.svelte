@@ -1,16 +1,25 @@
 <script lang="ts">
 	import type { TemplateSubComponent } from '$lib/types';
+	import { onMount } from 'svelte';
 
 	let {
 		title,
+		parentId,
+		index,
+		childId,
 		type,
 		bindVariable = $bindable({}),
-		example
+		example,
+		fallbackFunc
 	}: {
 		title: string;
+		parentId: string;
+		index: number;
+		childId: string;
 		type: TemplateSubComponent['type'];
 		bindVariable: any;
 		example: string;
+		fallbackFunc: Function;
 	} = $props();
 
 	const months = [
@@ -27,6 +36,18 @@
 		'November',
 		'December'
 	];
+	let getValue = $state('');
+	const setValue = (value: string) => {
+		bindVariable[parentId][index][childId] = value;
+	};
+
+	onMount(() => {
+		console.log('hi');
+		if (bindVariable[parentId] === null || bindVariable[parentId] === undefined) {
+			fallbackFunc(parentId);
+		}
+		getValue = bindVariable[parentId][index][childId];
+	});
 
 	let showFileBanner = $state(false);
 	let file: File | null = $state(null);
@@ -35,7 +56,7 @@
 		file = input.files?.[0] ?? null;
 
 		if (file) {
-			bindVariable[title] = URL.createObjectURL(file);
+			setValue(URL.createObjectURL(file));
 		}
 	};
 
@@ -58,9 +79,9 @@
 		<p class="text-xs">{title}</p>
 		<input
 			{type}
-			bind:value={bindVariable[title]}
+			bind:value={getValue}
 			onchange={(e: Event) => {
-				bindVariable[title] = (e.target as HTMLInputElement).value;
+				setValue((e.target as HTMLInputElement).value);
 			}}
 			placeholder={example}
 			class="input-primary"
@@ -73,9 +94,9 @@
 		<p class="text-xs">{title}</p>
 		<textarea
 			placeholder={example}
-			bind:value={bindVariable[title]}
+			bind:value={getValue}
 			onchange={(e: Event) => {
-				bindVariable[title] = (e.target as HTMLInputElement).value;
+				setValue((e.target as HTMLInputElement).value);
 			}}
 			class="input-primary min-h-40"
 		></textarea>
@@ -87,9 +108,9 @@
 		<p class="text-xs">{title}</p>
 		<div class="flex gap-x-sm">
 			<select
-				bind:value={bindVariable[title]}
+				bind:value={getValue}
 				onchange={(e: Event) => {
-					bindVariable[title] = (e.target as HTMLInputElement).value;
+					setValue((e.target as HTMLInputElement).value);
 				}}
 				placeholder="January"
 				class="input-primary"
@@ -108,7 +129,7 @@
 		<div class="flex w-full items-center justify-center">
 			<div class="aspect-7/9 h-40 overflow-hidden border border-darkerBg bg-darkBg">
 				<!-- svelte-ignore a11y_img_redundant_alt -->
-				<img alt="photo" src={bindVariable[title]} />
+				<img alt="photo" src={getValue} />
 			</div>
 		</div>
 		<div class="flex h-full w-full flex-col">

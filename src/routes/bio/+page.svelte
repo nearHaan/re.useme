@@ -45,17 +45,17 @@
 		}
 	}
 
-	function onAddElem() {
+	function onAddElem(parentId: string) {
 		if (detailsTemplate.state === 'success') {
-			const sample = Object.keys(detailsTemplate.data.template[activeSectionKey].subComponents);
+			const sample = Object.keys(detailsTemplate.data.template[parentId].subComponents);
 			console.log(sample);
 			if (
-				detailsTemplate.data.userDetails[activeSectionKey] === undefined ||
-				detailsTemplate.data.userDetails[activeSectionKey] === null
+				detailsTemplate.data.userDetails[parentId] === undefined ||
+				detailsTemplate.data.userDetails[parentId] === null
 			) {
-				detailsTemplate.data.userDetails[activeSectionKey] = new Array<Record<string, string>>();
+				detailsTemplate.data.userDetails[parentId] = new Array<Record<string, string>>();
 			}
-			(detailsTemplate.data.userDetails[activeSectionKey] as Array<Record<string, string>>).push(
+			(detailsTemplate.data.userDetails[parentId] as Array<Record<string, string>>).push(
 				sample.reduce((acc: Record<string, string>, key: string) => {
 					acc[key] = '';
 					return acc;
@@ -133,8 +133,11 @@
 			{#if detailsTemplate.data.template[activeSectionKey].meta.type === 'single'}
 				<div class="overflow-auto">
 					<BioCompCard
+						parentId={activeSectionKey}
+						index={0}
 						subComponents={detailsTemplate.data.template[activeSectionKey].subComponents}
-						bind:bindVariable={detailsTemplate.data.userDetails[activeSectionKey]}
+						bind:bindVariable={detailsTemplate.data.userDetails}
+						fallbackFunc={onAddElem}
 					/>
 				</div>
 				<!-- list type -->
@@ -143,8 +146,11 @@
 					{#each detailsTemplate.data.userDetails[activeSectionKey] as item, i}
 						<div class="flex w-full max-md:flex-col">
 							<BioCompCard
+								parentId={activeSectionKey}
+								index={i}
 								subComponents={detailsTemplate.data.template[activeSectionKey].subComponents}
-								bind:bindVariable={detailsTemplate.data.userDetails[activeSectionKey][i]}
+								bind:bindVariable={detailsTemplate.data.userDetails}
+								fallbackFunc={onAddElem}
 							/>
 							<div
 								class="flex h-full items-start justify-center bg-darkerBg p-xs max-md:w-full max-md:justify-end"
@@ -160,7 +166,11 @@
 							</div>
 						</div>
 					{/each}
-					<button onclick={onAddElem} class="w-fit py-xs font-semibold text-secondary"
+					<button
+						onclick={() => {
+							onAddElem(activeSectionKey);
+						}}
+						class="w-fit py-xs font-semibold text-secondary"
 						>Add {detailsTemplate.data.template[activeSectionKey].title}</button
 					>
 				</div>
