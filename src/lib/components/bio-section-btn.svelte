@@ -14,7 +14,7 @@
 	onclick={() => {
 		onClick(title);
 	}}
-	class="w-full rounded bg-background p-sm text-left"
+	class="w-full rounded {isActive ? 'bg-section-active-bg' : 'bg-background'} p-sm text-left"
 >
-	<p class="font-semibold">{title}</p>
+	<p class="font-semibold {isActive ? 'text-secondary' : ''}">{title}</p>
 </button>

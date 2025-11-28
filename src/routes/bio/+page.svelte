@@ -121,7 +121,7 @@
 					onClick={() => {
 						onSectionClick(key);
 					}}
-					isActive={false}
+					isActive={key === activeSectionKey}
 				/>
 			{/each}
 		{/if}
@@ -148,7 +148,7 @@
 							onClick={() => {
 								onSectionClick(key);
 							}}
-							isActive={false}
+							isActive={key === activeSectionKey}
 						/>
 					{/each}
 				{/if}
