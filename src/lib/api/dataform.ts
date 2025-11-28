@@ -3,7 +3,11 @@ import type { BioDataType } from '$lib/types';
 
 export async function getBioData(): Promise<BioDataType> {
 	const response = await fetch(`${PUBLIC_API_BASE_URL}/dataform/`, {
-		headers: { 'Content-type': 'application/json' },
+		headers: {
+			'Content-type': 'application/json',
+			Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+		},
+
 		method: 'GET'
 	});
 
