@@ -141,7 +141,7 @@
 					type="file"
 					accept="image/*"
 					onchange={onFile}
-					class="btn-secondary w-full text-xs"
+					class="btn-secondary h-fit w-full text-xs"
 				/>
 				{#if file}
 					<button onclick={onUpload} class="btn-primary w-fit text-xs">Upload</button>

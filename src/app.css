@@ -56,15 +56,15 @@
 
 @layer components {
 	.btn-primary {
-		@apply flex h-11 min-w-30 items-center justify-center rounded bg-secondary px-sm text-base font-semibold text-white;
+		@apply flex h-11 min-w-30 items-center justify-center rounded bg-secondary px-sm py-xs text-base font-semibold text-white;
 	}
 
 	.btn-secondary {
-		@apply flex h-11 min-w-30 items-center justify-center rounded bg-darkerBg px-sm text-base font-semibold text-text;
+		@apply flex h-11 min-w-30 items-center justify-center rounded bg-darkerBg px-sm py-xs text-base font-semibold text-text;
 	}
 
 	.btn-outlined {
-		@apply flex h-11 min-w-30 items-center justify-center rounded border-2 border-secondary px-sm text-base font-semibold text-secondary;
+		@apply flex h-11 min-w-30 items-center justify-center rounded border-2 border-secondary px-sm py-xs text-base font-semibold text-secondary;
 	}
 
 	.btn-sidebar {
