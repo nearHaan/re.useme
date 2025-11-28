@@ -45,6 +45,7 @@
 
 	function onSectionClick(key: string) {
 		activeSectionKey = key;
+		activeIndex = keys.indexOf(activeSectionKey);
 	}
 
 	function onDeleteClick(index: number) {
