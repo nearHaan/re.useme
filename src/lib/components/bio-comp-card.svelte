@@ -7,12 +7,14 @@
 		index,
 		subComponents,
 		bindVariable = $bindable({}),
+		changeChangeSecKeys = $bindable(Boolean),
 		fallbackFunc
 	}: {
 		parentId: string;
 		index: number;
 		subComponents: DetailsTemplateType['']['subComponents'];
 		bindVariable: any;
+		changeChangeSecKeys: any;
 		fallbackFunc: Function;
 	} = $props();
 </script>
@@ -25,6 +27,7 @@
 			{index}
 			childId={key}
 			bind:bindVariable
+			bind:changeChangeSecKeys
 			type={meta.type}
 			example={meta.example}
 			{fallbackFunc}

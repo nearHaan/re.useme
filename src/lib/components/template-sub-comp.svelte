@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { TemplateSubComponent } from '$lib/types';
-	import { onMount } from 'svelte';
 
 	let {
 		title,
@@ -9,6 +8,7 @@
 		childId,
 		type,
 		bindVariable = $bindable({}),
+		changeChangeSecKeys = $bindable(new Set<string>()),
 		example,
 		fallbackFunc
 	}: {
@@ -18,6 +18,7 @@
 		childId: string;
 		type: TemplateSubComponent['type'];
 		bindVariable: any;
+		changeChangeSecKeys: Set<string>;
 		example: string;
 		fallbackFunc: Function;
 	} = $props();
@@ -39,6 +40,7 @@
 	let getValue = $state('');
 	const setValue = (value: string) => {
 		bindVariable[parentId][index][childId] = value;
+		changeChangeSecKeys.add(parentId);
 	};
 
 	$effect(() => {

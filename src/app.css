@@ -46,7 +46,7 @@
 	}
 
 	p {
-		@apply text-justify leading-relaxed text-neutral-700;
+		@apply text-justify text-base leading-relaxed text-neutral-700;
 	}
 
 	a {
@@ -56,19 +56,19 @@
 
 @layer components {
 	.btn-primary {
-		@apply rounded bg-secondary px-sm py-xs font-semibold text-white;
+		@apply flex h-11 min-w-30 items-center justify-center rounded bg-secondary px-sm text-base font-semibold text-white;
 	}
 
 	.btn-secondary {
-		@apply rounded bg-darkerBg px-sm py-xs font-semibold text-text;
+		@apply flex h-11 min-w-30 items-center justify-center rounded bg-darkerBg px-sm text-base font-semibold text-text;
 	}
 
 	.btn-outlined {
-		@apply rounded border-2 border-secondary px-sm py-xs font-semibold text-secondary;
+		@apply flex h-11 min-w-30 items-center justify-center rounded border-2 border-secondary px-sm text-base font-semibold text-secondary;
 	}
 
 	.btn-sidebar {
-		@apply flex w-full cursor-pointer items-center justify-start gap-xs rounded-lg p-sm text-inactive hover:text-secondary;
+		@apply flex w-full cursor-pointer items-center justify-start gap-xs rounded-lg p-sm text-base text-inactive hover:text-secondary;
 
 		&:hover p {
 			@apply text-secondary;
@@ -96,7 +96,7 @@
 	}
 
 	.p-error {
-		@apply rounded text-sm text-red-400;
+		@apply rounded text-base text-red-400;
 	}
 }
 

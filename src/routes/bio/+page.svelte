@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { getBioData } from '$lib/api/dataform';
+	import { getBioData, updateUserData } from '$lib/api/dataform';
 	import BioCompCard from '$lib/components/bio-comp-card.svelte';
 	import BioSectionBtn from '$lib/components/bio-section-btn.svelte';
+	import LoadingCircle from '$lib/components/loading-circle.svelte';
 	import type { BioDataType, LoadedData } from '$lib/types';
 	import { ChevronDown, Trash } from 'lucide-svelte';
 	import { onMount } from 'svelte';
@@ -11,6 +12,10 @@
 		message: 'Loading template'
 	});
 	let activeSectionKey = $state<string>('');
+	let keys: Array<string> = $state([]);
+	let activeIndex = $state(0);
+	let isLoading = $state(false);
+	let changeChangeSecKeys = $state(new Set<string>()); // To track sections whose details have changed
 
 	onMount(async () => {
 		try {
@@ -18,6 +23,9 @@
 				state: 'success',
 				data: await getBioData()
 			};
+			keys = Object.keys(detailsTemplate.data.template);
+			activeSectionKey = keys[activeIndex];
+			changeChangeSecKeys.clear();
 		} catch (err: any) {
 			console.error(err);
 			detailsTemplate = {
@@ -41,6 +49,7 @@
 
 	function onDeleteClick(index: number) {
 		if (detailsTemplate.state === 'success') {
+			changeChangeSecKeys.add(activeSectionKey);
 			(detailsTemplate.data.userDetails[activeSectionKey] as Array<Record<string, string>>).splice(
 				index,
 				1
@@ -64,11 +73,37 @@
 					return acc;
 				}, {})
 			);
+			changeChangeSecKeys.add(activeSectionKey);
 		}
 	}
 
-	function onSave() {
+	function onPrevious() {
+		activeIndex = activeIndex > 0 ? activeIndex - 1 : activeIndex;
+		activeSectionKey = keys[activeIndex];
+	}
+
+	// TODO: Prevent unnecessary api call if data not changed
+	async function onSave() {
 		if (detailsTemplate.state === 'success') {
+			if (changeChangeSecKeys.has(activeSectionKey)) {
+				isLoading = true;
+				try {
+					const success = await updateUserData(
+						activeSectionKey,
+						detailsTemplate.data.userDetails[activeSectionKey]
+					);
+					if (success) {
+						changeChangeSecKeys.delete(activeSectionKey);
+						console.log('Updated');
+					}
+				} catch (err: any) {
+					console.log('Error: ', err);
+				} finally {
+					isLoading = false;
+				}
+			}
+			activeIndex = activeIndex + 1 < keys.length ? activeIndex + 1 : activeIndex;
+			activeSectionKey = keys[activeIndex];
 			console.log($state.snapshot(detailsTemplate.data.userDetails));
 		}
 	}
@@ -140,6 +175,7 @@
 						index={0}
 						subComponents={detailsTemplate.data.template[activeSectionKey].subComponents}
 						bind:bindVariable={detailsTemplate.data.userDetails}
+						bind:changeChangeSecKeys
 						fallbackFunc={onAddElem}
 					/>
 				</div>
@@ -153,6 +189,7 @@
 								index={i}
 								subComponents={detailsTemplate.data.template[activeSectionKey].subComponents}
 								bind:bindVariable={detailsTemplate.data.userDetails}
+								bind:changeChangeSecKeys
 								fallbackFunc={onAddElem}
 							/>
 							<div
@@ -179,8 +216,15 @@
 				</div>
 			{/if}
 			<div class="mt-sm flex items-center justify-between">
-				<button class="btn-outlined"> Previous </button>
-				<button onclick={onSave} class="btn-primary"> Save & Next </button>
+				<button onclick={onPrevious} class="btn-outlined"> Previous </button>
+				<button onclick={onSave} class="btn-primary">
+					{#if isLoading}
+						<p><LoadingCircle /></p>
+					{:else}<p class="text-background">
+							{changeChangeSecKeys.has(activeSectionKey) ? 'Save &' : ''} Next
+						</p>
+					{/if}
+				</button>
 			</div>
 		</div>
 	{:else if detailsTemplate.state === 'pending'}
