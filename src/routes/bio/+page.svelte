@@ -25,7 +25,7 @@
 			};
 			keys = Object.keys(detailsTemplate.data.template);
 			activeSectionKey = keys[activeIndex];
-			changeChangeSecKeys.clear();
+			changeChangeSecKeys = new Set();
 		} catch (err: any) {
 			console.error(err);
 			detailsTemplate = {
@@ -51,6 +51,7 @@
 	function onDeleteClick(index: number) {
 		if (detailsTemplate.state === 'success') {
 			changeChangeSecKeys.add(activeSectionKey);
+			changeChangeSecKeys = new Set(changeChangeSecKeys);
 			(detailsTemplate.data.userDetails[activeSectionKey] as Array<Record<string, string>>).splice(
 				index,
 				1
@@ -75,6 +76,7 @@
 				}, {})
 			);
 			changeChangeSecKeys.add(activeSectionKey);
+			changeChangeSecKeys = new Set(changeChangeSecKeys);
 		}
 	}
 

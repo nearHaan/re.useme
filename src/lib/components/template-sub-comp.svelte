@@ -41,6 +41,7 @@
 	const setValue = (value: string) => {
 		bindVariable[parentId][index][childId] = value;
 		changeChangeSecKeys.add(parentId);
+		changeChangeSecKeys = new Set(changeChangeSecKeys);
 	};
 
 	$effect(() => {
