@@ -1,17 +1,20 @@
 <script lang="ts">
-	import type { DetailsTemplateItem, DetailsTemplateType } from '$lib/types';
-	import { onMount } from 'svelte';
+	import type { DetailsTemplateType } from '$lib/types';
 	import CheckboxBtn from './checkbox-btn.svelte';
 	import CreateSubComp from './create-sub-comp.svelte';
 
 	let {
+		key,
 		title,
+		type,
 		components,
 		userDetails,
 		selectedData = $bindable({})
 	}: {
+		key: string;
 		title: string;
-		components: DetailsTemplateItem;
+		type: 'single' | 'list';
+		components: DetailsTemplateType['']['subComponents'];
 		userDetails: Record<string, any>;
 		selectedData: object;
 	} = $props();
@@ -20,31 +23,31 @@
 <div class="flex flex-col rounded-sm border-2 border-darkerBg">
 	<h3 class="bg-darkerBg p-xs">{title}</h3>
 	<div class="flex flex-col gap-y-xs p-xs">
-		{#if components.meta.type === 'single'}
-			{#each Object.entries(components.subComponents) as [component, value]}
+		{#if type === 'single'}
+			{#each Object.entries(components) as [id, component]}
 				<div class="flex items-center rounded-sm bg-darkBg p-xs">
 					<CreateSubComp
-						title={component}
-						type={components.subComponents[component].type}
-						value={userDetails[title][component]}
+						title={component.title}
+						type={component.type}
+						value={userDetails[key][0][id]}
 					/>
 					<CheckboxBtn isChecked={false} />
 				</div>
 			{/each}
 		{:else}
-			{#each userDetails[title] as item, i}
+			{#each userDetails[key] as item, i}
 				<div class="flex flex-col gap-y-xs border-2 border-darkerBg">
 					<div class="flex w-full justify-between bg-darkerBg p-xs">
 						<p>{i + 1}</p>
 						<CheckboxBtn isChecked={false} />
 					</div>
 					<div class="grid grid-cols-2 gap-xs p-xs">
-						{#each Object.entries(components.subComponents) as [component, value]}
-							{#if userDetails[title][i][component]}
+						{#each Object.entries(components) as [id, component]}
+							{#if userDetails[key][i]}
 								<CreateSubComp
-									title={component}
-									type={components.subComponents[component].type}
-									value={userDetails[title][i][component]}
+									title={component.title}
+									type={component.type}
+									value={userDetails[key][i][id]}
 								/>
 							{/if}
 						{/each}

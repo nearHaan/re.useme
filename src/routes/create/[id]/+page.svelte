@@ -1,106 +1,26 @@
 <script lang="ts">
+	import { getResumeData } from '$lib/api/resume';
 	import BioCreateSection from '$lib/components/bio-create-section.svelte';
-	import type { DetailsTemplateType, LoadedData } from '$lib/types';
+	import type { LoadedData, ResumeDataType } from '$lib/types';
+	import { onMount } from 'svelte';
 
-	type BioDataType = {
-		template: DetailsTemplateType;
-		userDetails: Record<string, any>;
-	};
+	let detailsTemplate: LoadedData<ResumeDataType> = $state({
+		state: 'pending',
+		message: 'Loading template'
+	});
 
-	let detailsTemplate: LoadedData<BioDataType> = $state({
-		state: 'success',
-		data: {
-			template: {
-				'Personal Info': {
-					meta: {
-						desc: 'Enter your personal info',
-						type: 'single' // list || single
-					},
-					subComponents: {
-						'Your Photo': {
-							type: 'photo',
-							example: ''
-						},
-						'First Name': {
-							type: 'text',
-							example: 'Farhaan'
-						},
-						'Last Name': {
-							type: 'text',
-							example: 'Nizam'
-						},
-						About: {
-							type: 'text-area',
-							example: 'I am awesome'
-						}
-					}
-				},
-				Experience: {
-					meta: {
-						desc: 'Description',
-						type: 'list' // list || single
-					},
-					subComponents: {
-						'Job Title': {
-							type: 'text',
-							example: 'CEO'
-						},
-						Company: {
-							type: 'text',
-							example: 'Meta'
-						},
-						'Date of Joining': {
-							type: 'date',
-							example: 'January 2025'
-						},
-						Till: {
-							type: 'date',
-							example: 'January 2025'
-						},
-						Description: {
-							type: 'text-area',
-							example: 'Awesome job'
-						}
-					}
-				},
-				Skills: {
-					meta: {
-						type: 'list',
-						desc: 'Your top skills'
-					},
-					subComponents: {
-						Name: {
-							type: 'text',
-							example: 'Singing'
-						}
-					}
-				}
-			},
-			userDetails: {
-				'Personal Info': {
-					'Your Photo':
-						'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww',
-					'First Name': 'Farhaan',
-					'Last Name': 'Nizam',
-					About: 'buhahahahah'
-				},
-				Experience: [
-					{
-						'Job Title': 'Yeyy',
-						Company: 'Facebook',
-						'Date of Joining': 'January, 2025',
-						Till: '',
-						Description: ''
-					},
-					{
-						'Job Title': 'Yeyy',
-						Company: 'Facebook',
-						'Date of Joining': 'January, 2025',
-						Till: '',
-						Description: ''
-					}
-				]
-			}
+	onMount(async () => {
+		try {
+			detailsTemplate = {
+				state: 'success',
+				data: await getResumeData()
+			};
+		} catch (err: any) {
+			console.error(err);
+			detailsTemplate = {
+				state: 'failed',
+				message: 'Error fetching template'
+			};
 		}
 	});
 </script>
@@ -113,11 +33,13 @@
 					<h2>One more step...</h2>
 					<p>Select the details to be included in the Resume</p>
 				</div>
-				{#each Object.entries(detailsTemplate.data.template) as [section, components]}
+				{#each Object.entries(detailsTemplate.data.template) as [key, value]}
 					<BioCreateSection
-						title={section}
+						{key}
+						title={value.title}
+						type={value.meta.type}
 						userDetails={detailsTemplate.data.userDetails}
-						{components}
+						components={value.subComponents}
 						selectedData={{}}
 					/>
 				{/each}

@@ -51,3 +51,8 @@ export type BioDataType = {
 	template: DetailsTemplateType;
 	userDetails: Record<string, any>;
 };
+
+export type ResumeDataType = {
+	template: DetailsTemplateType;
+	userDetails: Record<string, any>;
+};
