@@ -15,8 +15,8 @@
 		title: string;
 		type: 'single' | 'list';
 		components: DetailsTemplateType['']['subComponents'];
-		userDetails: Record<string, any>;
-		selectedData: object;
+		userDetails: Record<string, Record<string, string>[]>;
+		selectedData: Record<string, Record<string, string>[]>;
 	} = $props();
 </script>
 
@@ -31,7 +31,9 @@
 						type={component.type}
 						value={userDetails[key][0][id]}
 					/>
-					<CheckboxBtn isChecked={false} />
+					{#if userDetails[key][0][id]}
+						<CheckboxBtn parentId={key} index={0} childId={id} bind:selectedData {userDetails} />
+					{/if}
 				</div>
 			{/each}
 		{:else}
@@ -39,7 +41,13 @@
 				<div class="flex flex-col gap-y-xs border-2 border-darkerBg">
 					<div class="flex w-full justify-between bg-darkerBg p-xs">
 						<p>{i + 1}</p>
-						<CheckboxBtn isChecked={false} />
+						<CheckboxBtn
+							parentId={key}
+							index={i}
+							childId={Object.keys(userDetails[key][i])[0]}
+							bind:selectedData
+							{userDetails}
+						/>
 					</div>
 					<div class="grid grid-cols-2 gap-xs p-xs">
 						{#each Object.entries(components) as [id, component]}

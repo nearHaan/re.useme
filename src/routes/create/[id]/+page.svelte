@@ -8,6 +8,7 @@
 		state: 'pending',
 		message: 'Loading template'
 	});
+	let selectedData = $state({});
 
 	onMount(async () => {
 		try {
@@ -15,6 +16,7 @@
 				state: 'success',
 				data: await getResumeData()
 			};
+			selectedData = JSON.parse(JSON.stringify(detailsTemplate.data.userDetails));
 		} catch (err: any) {
 			console.error(err);
 			detailsTemplate = {
@@ -40,7 +42,7 @@
 						type={value.meta.type}
 						userDetails={detailsTemplate.data.userDetails}
 						components={value.subComponents}
-						selectedData={{}}
+						bind:selectedData
 					/>
 				{/each}
 			</div>

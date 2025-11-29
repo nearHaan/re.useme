@@ -1,17 +1,33 @@
 <script lang="ts">
 	import { LucideCheck } from 'lucide-svelte';
-	let { isChecked = $bindable(false) }: { isChecked: Boolean } = $props();
+	let {
+		parentId,
+		index,
+		childId,
+		selectedData = $bindable({}),
+		userDetails
+	}: {
+		parentId: string;
+		index: number;
+		childId: string;
+		selectedData: Record<string, Record<string, string>[]>;
+		userDetails: Record<string, Record<string, string>[]>;
+	} = $props();
 </script>
 
 <button
 	onclick={() => {
-		isChecked = !isChecked;
+		selectedData[parentId][index][childId] = selectedData[parentId][index][childId]
+			? ''
+			: userDetails[parentId][index][childId];
 	}}
-	class="flex h-5 w-5 items-center justify-center rounded-full border border-text {isChecked
+	class="flex h-5 w-5 items-center justify-center rounded-full border border-text {selectedData[
+		parentId
+	][index][childId]
 		? 'bg-green-400'
 		: 'bg-background'} p-xxxs text-text"
 >
-	{#if isChecked}
+	{#if selectedData[parentId][index][childId]}
 		<LucideCheck />
 	{/if}
 </button>
