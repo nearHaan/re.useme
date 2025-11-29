@@ -19,7 +19,7 @@
 			console.error(err);
 			detailsTemplate = {
 				state: 'failed',
-				message: 'Error fetching template'
+				message: 'Error fetching template: ' + err
 			};
 		}
 	});
