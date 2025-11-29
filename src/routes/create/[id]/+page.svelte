@@ -47,7 +47,7 @@
 		{:else if detailsTemplate.state === 'pending'}
 			<p>Loading data</p>
 		{:else}
-			<p>Something went wrong</p>
+			<p>Something went wrong: {detailsTemplate.message}</p>
 		{/if}
 	</div>
 	<div class="w-full max-md:hidden">//</div>
