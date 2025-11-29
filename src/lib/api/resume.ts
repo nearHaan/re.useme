@@ -2,7 +2,7 @@ import { PUBLIC_API_BASE_URL } from '$env/static/public';
 import type { ResumeDataType } from '$lib/types';
 
 export async function getResumeData(): Promise<ResumeDataType> {
-	const response = await fetch(`${PUBLIC_API_BASE_URL}/resume/create`, {
+	const response = await fetch(`${PUBLIC_API_BASE_URL}/resume/create/`, {
 		headers: {
 			'Content-type': 'application/json',
 			Authorization: `Bearer ${localStorage.getItem('accessToken')}`
